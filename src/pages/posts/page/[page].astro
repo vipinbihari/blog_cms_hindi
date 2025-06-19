@@ -1,0 +1,55 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { Page } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageNavigation from '../../../components/features/PageNavigation.astro';
+import PostCard from '../../../components/ui/PostCard.astro';
+// FormattedDate and ResponsiveImage are now used within PostCard
+import { SEO } from 'astro-seo';
+import { BLOG_CONFIG } from '../../../config/current-config';
+
+export async function getStaticPaths({ paginate }) {
+  // Get all blog posts sorted by date
+  const allPosts: CollectionEntry<'posts'>[] = await getCollection('posts');
+  const sortedPosts = allPosts.sort((a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) => b.data.date.valueOf() - a.data.date.valueOf());
+  
+  // Generate pages for all posts with pagination (12 posts per page)
+  return paginate(sortedPosts, { pageSize: BLOG_CONFIG.layout.postPerPage });
+}
+
+const { page }: { page: Page<CollectionEntry<'posts'>> } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<BaseLayout>
+  <SEO
+  slot="seo"
+  title={`Blog Archive - Page ${(page && page.currentPage) ? page.currentPage : 1} | ${BLOG_CONFIG.site.name}`}
+  description={`Browse all articles - Page ${(page && page.currentPage) ? page.currentPage : 1} of our investment and stock market blog`}
+  canonical={canonicalURL}
+  openGraph={{
+    basic: {
+      title: `Blog Archive - ${BLOG_CONFIG.site.name}`,
+      type: "website",
+      image: `https://placehold.co/1200x630?text=${encodeURIComponent(BLOG_CONFIG.site.name)}+Blog+Archive`
+    }
+  }}
+/>
+
+  <div class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+        Blog Archive
+      </h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {page.data.map((post: CollectionEntry<'posts'>) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+      
+      <!-- Pagination Controls -->
+      <PageNavigation page={page} />
+    </div>
+  </div>
+</BaseLayout>

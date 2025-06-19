@@ -1,0 +1,29 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getRelatedPosts } from '../../lib/content';
+import ResponsiveImage from '../../components/ui/ResponsiveImage.astro';
+import { BLOG_CONFIG } from '../../config/current-config';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const allPosts: CollectionEntry<'posts'>[] = await getCollection('posts');
+  
+  return await Promise.all(allPosts.map(async (entry: CollectionEntry<'posts'>) => {
+    // Get related posts for this entry
+    const relatedPosts = await getRelatedPosts(entry, BLOG_CONFIG.layout.relatedPostsCount);
+    
+    return {
+      params: { slug: entry.slug },
+      props: { entry, relatedPosts },
+    };
+  }));
+}
+
+const { entry, relatedPosts }: { entry: CollectionEntry<'posts'>, relatedPosts: any[] } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<PostLayout post={entry} content={Content} relatedPosts={relatedPosts}>
+  <Content components={{ img: ResponsiveImage }} />
+</PostLayout>
