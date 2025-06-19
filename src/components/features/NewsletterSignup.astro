@@ -1,0 +1,67 @@
+---
+/**
+ * NewsletterSignup component
+ * Allows users to subscribe to the blog's newsletter
+ */
+
+interface Props {
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  position?: 'inline' | 'footer';
+}
+
+const {
+  title = 'Subscribe to our newsletter',
+  description = 'Get the latest market insights and trading strategies delivered to your inbox. No spam, ever.',
+  buttonText = 'Subscribe',
+  position = 'inline',
+} = Astro.props;
+
+// Base classes for different positions
+const containerClasses = {
+  inline: 'bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-6 my-8',
+  footer: 'bg-transparent',
+};
+
+const titleClasses = {
+  inline: 'text-xl font-bold text-gray-900 dark:text-white mb-2',
+  footer: 'text-lg font-medium text-gray-800 dark:text-gray-200 mb-2',
+};
+
+const descriptionClasses = {
+  inline: 'text-gray-600 dark:text-gray-300 mb-4',
+  footer: 'text-sm text-gray-600 dark:text-gray-400 mb-4',
+};
+
+const formClasses = {
+  inline: 'flex flex-col sm:flex-row gap-3',
+  footer: 'flex flex-col sm:flex-row gap-2 items-center',
+};
+---
+
+<div class={containerClasses[position]}>
+  <!--<h3 class={titleClasses[position]}>{title}</h3>-->
+  <p class={descriptionClasses[position]}>{description}</p>
+  
+  <form 
+    class={formClasses[position]}
+    action="#"
+    method="post"
+    onsubmit="alert('This would submit to a real newsletter service in production!'); return false;"
+  >
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="Your email address"
+      required
+      class="flex-grow px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent"
+    />
+    <button 
+      type="submit"
+      class="px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-400 text-white font-medium rounded-md transition-colors"
+    >
+      {buttonText}
+    </button>
+  </form>
+</div>

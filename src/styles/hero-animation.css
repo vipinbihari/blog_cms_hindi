@@ -1,0 +1,160 @@
+/* Stock market animation styles */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/images/blog/blog-home-image-960.webp');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: -1;
+  animation: pulse 15s infinite alternate;
+}
+
+/* Water ripple container */
+.water-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* Individual ripples */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  transform: scale(0);
+  animation: ripple-effect 6s linear infinite;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(16, 185, 129, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: drop-effect 6s linear infinite;
+}
+
+/* Position ripples at different locations */
+.ripple:nth-child(1) {
+  top: 20%;
+  left: 25%;
+  width: 150px;
+  height: 150px;
+}
+
+.ripple:nth-child(2) {
+  top: 50%;
+  left: 65%;
+  width: 180px;
+  height: 180px;
+  animation-delay: 2s;
+}
+
+.ripple:nth-child(3) {
+  top: 70%;
+  left: 30%;
+  width: 120px;
+  height: 120px;
+  animation-delay: 4s;
+}
+
+.ripple:nth-child(4) {
+  top: 35%;
+  left: 80%;
+  width: 100px;
+  height: 100px;
+  animation-delay: 1s;
+}
+
+.ripple:nth-child(5) {
+  top: 80%;
+  left: 75%;
+  width: 130px;
+  height: 130px;
+  animation-delay: 3s;
+}
+
+.ripple:nth-child(6) {
+  top: 40%;
+  left: 10%;
+  width: 160px;
+  height: 160px;
+  animation-delay: 5s;
+}
+
+/* Ripple animation */
+@keyframes ripple-effect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Pulse animation for background */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Drop animation */
+@keyframes drop-effect {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Dark mode adjustments */
+.dark .water-effect {
+  opacity: 0.5;
+}
+
+.dark .ripple {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.dark .ripple::before {
+  background-color: rgba(16, 185, 129, 0.5);
+}

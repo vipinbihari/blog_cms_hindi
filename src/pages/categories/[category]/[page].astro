@@ -1,0 +1,72 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FormattedDate from '../../../components/ui/FormattedDate.astro';
+import PageNavigation from '../../../components/features/PageNavigation.astro';
+import ResponsiveImage from '../../../components/ui/ResponsiveImage.astro';
+import PostCard from '../../../components/ui/PostCard.astro';
+import { SEO } from 'astro-seo';
+import { BLOG_CONFIG } from '../../../config/current-config';
+
+export async function getStaticPaths({ paginate }) {
+  // Get all categories available
+  const allPosts: CollectionEntry<'posts'>[] = await getCollection('posts');
+  const uniqueCategories = [...new Set(allPosts.map((post: CollectionEntry<'posts'>) => post.data.category))];
+  
+  // For each category, paginate their posts
+  return uniqueCategories.flatMap(category => {
+    const filteredPosts = allPosts
+      .filter((post: CollectionEntry<'posts'>) => post.data.category === category)
+      .sort((a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) => b.data.date.valueOf() - a.data.date.valueOf());
+      
+    return paginate(filteredPosts, {
+      params: { category },
+      pageSize: BLOG_CONFIG.layout.postPerPage,
+      props: { category }
+    });
+  });
+}
+
+const { page, category } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Format category name for display
+const formattedCategory = category
+  .split('-')
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(' ');
+---
+
+<BaseLayout>
+  <SEO
+    slot="seo"
+    title={`${formattedCategory} Articles - Page ${page.currentPage} | StockSage`}
+    description={`Browse our collection of ${formattedCategory} articles - Page ${page.currentPage}`}
+    canonical={canonicalURL}
+    openGraph={{
+      basic: {
+        title: `${formattedCategory} Articles - StockSage`,
+        type: 'website',
+        image: `https://placehold.co/1200x630?text=StockSage+Blog+-+${encodeURIComponent(formattedCategory)}`,
+      }
+    }}
+  />
+
+  <div class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+        {formattedCategory}
+      </h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {page.data.map(post => (
+          <PostCard post={post} />
+        ))}
+      </div>
+      
+      <!-- Pagination Controls -->
+      <PageNavigation page={page} />
+    </div>
+  </div>
+</BaseLayout>
+

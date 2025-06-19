@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BLOG_CONFIG } from '../config/current-config'; // Updated import
+
+// Ensure aboutPage config exists, otherwise use default values or handle error
+const aboutContent = BLOG_CONFIG.aboutPage;
+
+if (!aboutContent) {
+  // Optionally, redirect or show a specific message if about page config is missing
+  // For now, we'll throw an error or rely on Astro to handle missing data gracefully in template
+  console.error("About page configuration is missing!");
+  // You might want to redirect: return Astro.redirect('/404');
+  // Or set default content to prevent runtime errors in the template
+}
+
+const title = aboutContent?.title ?? 'About Us';
+const description = aboutContent?.description ?? 'Learn more about our company.';
+
+// Helper function to determine button classes based on style
+const getButtonClasses = (style: string | undefined) => {
+  switch (style) {
+    case 'primary':
+      return 'bg-primary-600 hover:bg-primary-700 text-white';
+    case 'secondary':
+      return 'bg-white hover:bg-gray-100 text-primary-600';
+    case 'outline':
+      return 'border-2 border-white hover:bg-white hover:text-primary-600 text-white';
+    default:
+      return 'bg-primary-600 hover:bg-primary-700 text-white'; // Default to primary
+  }
+};
+--- 
+
+<BaseLayout title={title} description={description}>
+  {aboutContent && (
+  <div class="bg-gradient-to-b from-primary-50 dark:from-gray-900 to-white dark:to-gray-800">
+    <!-- Hero Section -->
+    {aboutContent.hero && (
+      <section class="py-16 md:py-24 text-center">
+        <div class="container mx-auto px-6">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6" set:html={aboutContent.hero.headline}></h1>
+          <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            {aboutContent.hero.subheadline}
+          </p>
+          {aboutContent.hero.ctaButton && (
+            <a 
+              href={aboutContent.hero.ctaButton.href} 
+              class={`font-semibold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105 ${getButtonClasses(aboutContent.hero.ctaButton.style)}`}
+            >
+              {aboutContent.hero.ctaButton.text}
+            </a>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Our Mission Section -->
+    {aboutContent.mission && (
+      <section class="py-12 md:py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto text-center md:text-left md:flex items-center gap-8">
+            <div class="md:w-1/3 mb-8 md:mb-0">
+              <img class="rounded-xl shadow-2xl mx-auto md:mx-0" src={aboutContent.mission.imageUrl} alt={aboutContent.mission.imageAlt} />
+            </div>
+            <div class="md:w-2/3">
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{aboutContent.mission.title}</h2>
+              <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                {aboutContent.mission.text}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- 
+    Who We Are Section was here 
+    {aboutContent.whoWeAre && (
+      <div>Placeholder for Who We Are</div>
+    )}
+    -->
+
+    <!-- What We Offer Section -->
+    {aboutContent.whatWeOffer && aboutContent.whatWeOffer.items && (
+      <section class="py-12 md:py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-12">{aboutContent.whatWeOffer.title}</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {aboutContent.whatWeOffer.items.map((item) => (
+              <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl mb-4">{item.icon}</div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Our Values Section -->
+    {aboutContent.values && aboutContent.values.items && (
+      <section class="py-12 md:py-20 bg-primary-50 dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-12">{aboutContent.values.title}</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {aboutContent.values.items.map((value) => (
+              <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
+                <div class="text-5xl mb-6 text-primary-600 dark:text-primary-400">{value.icon}</div>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">{value.name}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Meet The Team Section -->
+    {aboutContent.team && aboutContent.team.members && (
+      <section class="py-12 md:py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-12">{aboutContent.team.title}</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {aboutContent.team.members.map((member) => (
+              <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                <img class="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-md" src={member.imageUrl} alt={member.name} />
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{member.name}</h3>
+                <p class="text-primary-600 dark:text-primary-400 font-medium mb-3">{member.role}</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Call to Action Section -->
+    {aboutContent.callToAction && aboutContent.callToAction.buttons && (
+      <section class="py-16 md:py-24 bg-gradient-to-r from-primary-600 to-secondary-600 dark:from-primary-700 dark:to-secondary-700">
+        <div class="container mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            {aboutContent.callToAction.headline}
+          </h2>
+          <p class="text-lg text-primary-100 dark:text-primary-200 max-w-2xl mx-auto mb-8">
+            {aboutContent.callToAction.subheadline}
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            {aboutContent.callToAction.buttons.map((button) => (
+              <a 
+                href={button.href} 
+                class={`font-semibold py-3 px-8 rounded-lg text-lg transition duration-300 ease-in-out shadow-md hover:shadow-lg ${getButtonClasses(button.style)}`}
+              >
+                {button.text}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </div>
+  )}
+</BaseLayout>

@@ -1,0 +1,304 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/ui/FormattedDate.astro';
+import Quiz from '../components/features/Quiz';
+import ShareButtons from '../components/features/ShareButtons';
+import AuthorBio from '../components/features/AuthorBio.astro';
+import TableOfContents from '../components/features/TableOfContents';
+import ReadingProgress from '../components/features/ReadingProgress';
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro';
+import RelatedPosts from '../components/features/RelatedPosts.astro';
+import UpstoxCTA from '../components/features/UpstoxCTA.astro';
+
+type Props = {
+  post: CollectionEntry<'posts'>;
+  content: any;
+  relatedPosts?: any[];
+};
+
+const { post, content, relatedPosts } = Astro.props;
+const { title, date, excerpt, tags, category, author, heroImage, quiz } = post.data;
+
+// Define current URL for share buttons
+const currentUrl = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Define a placeholder image URL
+const placeholderImageUrl = `https://placehold.co/1200x600?text=${encodeURIComponent(title.replace(/\s+/g, '+'))}`;
+const displayImage = heroImage || placeholderImageUrl;
+
+// SEO metadata for the base layout
+const ogPlaceholderImageUrl = `https://placehold.co/1200x630?text=${encodeURIComponent(title.replace(/\s+/g, '+'))}`;
+const ogImage = heroImage || ogPlaceholderImageUrl; // Use placeholder if heroImage is missing
+
+// MDX Component overrides to use ResponsiveImage for all images
+const components = {
+  img: ResponsiveImage,
+};
+
+---
+
+<BaseLayout
+  title={title}
+  description={excerpt}
+  image={ogImage}
+>
+  <!-- Reading progress indicator -->
+  <ReadingProgress client:only="react" />
+  <!-- Current URL for share buttons -->
+  <div class="w-full max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Sidebar with TOC - Placed first in DOM but positioned to the right using flex -->
+      <div class="hidden md:block md:w-1/4 order-2">
+        <div class="sticky top-24">
+          <TableOfContents client:only="react" />
+        </div>
+      </div>
+      
+      <div class="md:w-3/4 order-1">
+        <article class="prose dark:prose-invert lg:prose-lg max-w-none">
+      <header class="mb-8">
+        <div class="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-2">
+          <span>{category}</span>
+          <span>•</span>
+          <FormattedDate date={date} />
+          <span>•</span>
+          <span>By {author}</span>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
+        
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">{excerpt}</p>
+        
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => (
+            <a 
+              href={`/tags/${tag}`}
+              class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 px-2 py-1 rounded-full"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+        
+        {true && ( // Always render an image, using placeholder if heroImage is missing
+          <ResponsiveImage
+            src={displayImage}
+            alt={title}
+            class="w-full h-auto rounded-lg shadow-lg mb-8 hero-img"
+            loading="eager"
+            width={640}
+          />
+        )}
+      </header>
+
+      <div class="content">
+        <!-- This is where the MDX content is rendered -->
+        <slot />
+      </div>
+      
+      <!-- Simple image zoom functionality with resolution switching -->
+      <script>
+        // Create modal elements for image zoom
+        const modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.style.cssText = `
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.9);
+          backdrop-filter: blur(5px);
+          cursor: zoom-out;
+        `;
+        
+        const modalImg = document.createElement('img');
+        modalImg.className = 'modal-img';
+        modalImg.style.cssText = `
+          display: block;
+          margin: auto;
+          max-width: 90%;
+          max-height: 90%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border: none;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        `;
+
+        // Close button
+        const closeBtn = document.createElement('span');
+        closeBtn.innerHTML = '&times;';
+        closeBtn.style.cssText = `
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          color: white;
+          font-size: 40px;
+          font-weight: bold;
+          cursor: pointer;
+          z-index: 10000;
+        `;
+        
+        // Loading indicator
+        const loader = document.createElement('div');
+        loader.style.cssText = `
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid #3498db;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+          display: none;
+        `;
+        document.head.insertAdjacentHTML('beforeend', `
+          <style>
+            @keyframes spin {
+              0% { transform: translate(-50%, -50%) rotate(0deg); }
+              100% { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+          </style>
+        `);
+        
+        // Add modal elements to the DOM
+        modal.appendChild(closeBtn);
+        modal.appendChild(loader);
+        modal.appendChild(modalImg);
+        document.body.appendChild(modal);
+
+        // Close modal when clicking on it or on the close button
+        modal.addEventListener('click', () => modal.style.display = 'none');
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          modal.style.display = 'none';
+        });
+
+        // Cache to store already loaded high-res images
+        const imageCache = new Map();
+        
+        // Helper function to get the higher resolution version of an image
+        function getHighResVersion(src) {
+          // If already high-res or not an optimized image, return as is
+          if (src.includes('-960.') || !src.match(/-\d+\.(webp|jpg|jpeg|png|gif)$/)) {
+            return src;
+          }
+          
+          // Extract the base path without resolution and extension
+          // For example: /images/optimized/blog/post-1/hero-640.jpg → /images/optimized/blog/post-1/hero
+          const basePath = src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
+          
+          // Always return the WebP version regardless of original format
+          return `${basePath}-960.webp`;
+        }
+
+        function setupImageZoom() {
+          // Target images that haven't been processed yet
+          const contentImages = document.querySelectorAll('.content img:not([data-zoom-processed]), .hero-img:not([data-zoom-processed])');
+          
+          contentImages.forEach(imgEl => {
+            const img = imgEl as HTMLImageElement;
+            img.setAttribute('data-zoom-processed', 'true');
+            img.style.cursor = 'zoom-in';
+            
+            // Pre-calculate high-res version
+            const highResSrc = getHighResVersion(img.src);
+            img.setAttribute('data-highres-src', highResSrc);
+            
+            // Add click event
+            img.addEventListener('click', () => {
+              // Show modal immediately
+              modal.style.display = 'block';
+              
+              // Get high-res path
+              const highResSrc = img.getAttribute('data-highres-src');
+              
+              // Check if image is already cached from previous viewing
+              if (imageCache.has(highResSrc)) {
+                // Use cached image - no need to reload or show loader
+                modalImg.src = highResSrc;
+                modalImg.style.display = 'block';
+                return;
+              }
+              
+              // Image is not cached yet, show loader
+              loader.style.display = 'block';
+              modalImg.style.display = 'none';
+              
+              // Setup loading handlers
+              modalImg.onload = () => {
+                // Image loaded successfully - hide loader and cache the image
+                loader.style.display = 'none';
+                modalImg.style.display = 'block';
+                imageCache.set(highResSrc, true);
+              };
+              
+              modalImg.onerror = () => {
+                // If WebP high-res fails, try the same format but high-res
+                const originalFormat = img.src.match(/\.([^.]+)$/)?.[1] || 'jpg';
+                const basePathForFallback = img.src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
+                const fallbackSrc = `${basePathForFallback}-960.${originalFormat}`;
+                
+                console.log('WebP load failed, trying fallback:', fallbackSrc);
+                modalImg.src = fallbackSrc;
+                
+                // Add another error handler for the fallback
+                modalImg.onerror = () => {
+                  // If both high-res versions fail, use original
+                  console.log('Fallback also failed, using original image');
+                  loader.style.display = 'none';
+                  modalImg.style.display = 'block';
+                  modalImg.src = img.src;
+                };
+              };
+              
+              // Set source to high-res version
+              modalImg.src = highResSrc;
+            });
+          });
+        }
+
+        // Run on page load and after Astro view transitions
+        document.addEventListener('DOMContentLoaded', setupImageZoom);
+        document.addEventListener('astro:after-swap', setupImageZoom);
+        
+        // Call immediately if DOM is already loaded
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          setupImageZoom();
+        }
+      </script>
+      
+      <!-- Quiz section -->
+      {quiz && quiz.length > 0 && (
+        <div class="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <h2 class="text-2xl font-bold mb-6">Test Your Knowledge</h2>
+          <Quiz client:only="react" quiz={quiz} />
+        </div>
+      )}
+      <!-- Upstox CTA -->
+      <UpstoxCTA />
+      <!-- Share buttons -->
+      <div class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <ShareButtons client:only="react" title={title} url={currentUrl} description={excerpt} tags={tags} />
+      </div>
+      
+      <!-- Author Bio -->
+      <AuthorBio name={author} />
+      
+      <!-- Related Posts -->
+      {relatedPosts && relatedPosts.length > 0 && (  
+          <RelatedPosts posts={relatedPosts} />
+      )}
+        </article>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

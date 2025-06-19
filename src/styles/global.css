@@ -1,0 +1,252 @@
+/* Tailwind directives */
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* purgecss end ignore */
+
+/* Custom base styles */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Global styles with improved contrast */
+body {
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure proper text contrast */
+html {
+  color-scheme: light dark;
+}
+
+/* Better contrast for light mode */
+html:not(.dark) {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity)); /* slate-900 */
+}
+
+/* Better contrast for dark mode */
+html.dark {
+  --tw-text-opacity: 1;
+  color: rgb(248 250 252 / var(--tw-text-opacity)); /* slate-50 */
+}
+
+/* Utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 3;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Enhanced prose styles for better readability */
+.prose {
+  max-width: none;
+}
+
+/* Light mode prose styles */
+.prose {
+  --tw-prose-body: rgb(51 65 85); /* slate-700 */
+  --tw-prose-headings: rgb(15 23 42); /* slate-900 */
+  --tw-prose-lead: rgb(71 85 105); /* slate-600 */
+  --tw-prose-links: rgb(59 130 246); /* blue-500 */
+  --tw-prose-bold: rgb(15 23 42); /* slate-900 */
+  --tw-prose-counters: rgb(100 116 139); /* slate-500 */
+  --tw-prose-bullets: rgb(148 163 184); /* slate-400 */
+  --tw-prose-hr: rgb(226 232 240); /* slate-200 */
+  --tw-prose-quotes: rgb(71 85 105); /* slate-600 */
+  --tw-prose-quote-borders: rgb(226 232 240); /* slate-200 */
+  --tw-prose-captions: rgb(100 116 139); /* slate-500 */
+  --tw-prose-code: rgb(220 38 127); /* pink-600 */
+  --tw-prose-pre-code: rgb(226 232 240); /* slate-200 */
+  --tw-prose-pre-bg: rgb(15 23 42); /* slate-900 */
+  --tw-prose-th-borders: rgb(226 232 240); /* slate-200 */
+  --tw-prose-td-borders: rgb(226 232 240); /* slate-200 */
+}
+
+/* Dark mode prose overrides with explicit selectors */
+.dark .prose {
+  --tw-prose-body: rgb(203 213 225); /* slate-300 */
+  --tw-prose-headings: rgb(248 250 252); /* slate-50 */
+  --tw-prose-lead: rgb(226 232 240); /* slate-200 */
+  --tw-prose-links: rgb(96 165 250); /* blue-400 */
+  --tw-prose-bold: rgb(248 250 252); /* slate-50 */
+  --tw-prose-counters: rgb(148 163 184); /* slate-400 */
+  --tw-prose-bullets: rgb(100 116 139); /* slate-500 */
+  --tw-prose-hr: rgb(51 65 85); /* slate-600 */
+  --tw-prose-quotes: rgb(226 232 240); /* slate-200 */
+  --tw-prose-quote-borders: rgb(71 85 105); /* slate-600 */
+  --tw-prose-captions: rgb(148 163 184); /* slate-400 */
+  --tw-prose-code: rgb(244 114 182); /* pink-400 */
+  --tw-prose-pre-code: rgb(226 232 240); /* slate-200 */
+  --tw-prose-pre-bg: rgb(15 23 42); /* slate-900 */
+  --tw-prose-th-borders: rgb(51 65 85); /* slate-600 */
+  --tw-prose-td-borders: rgb(51 65 85); /* slate-600 */
+}
+
+/* Explicit dark mode heading styles for better visibility */
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: rgb(248 250 252) !important; /* slate-50 - force high contrast */
+}
+
+/* Explicit dark mode paragraph and text styles */
+.dark .prose p,
+.dark .prose li,
+.dark .prose div {
+  color: rgb(203 213 225) !important; /* slate-300 - good contrast */
+}
+
+/* Dark mode link styles */
+.dark .prose a {
+  color: rgb(248, 254, 255) !important; 
+}
+
+.dark .prose a:hover {
+  color: rgb(255, 255, 255) !important; 
+}
+
+/* Dark mode strong/bold text */
+.dark .prose strong,
+.dark .prose b {
+  color: rgb(248 250 252) !important; /* slate-50 */
+}
+
+/* Dark mode blockquotes */
+.dark .prose blockquote {
+  color: rgb(226 232 240) !important; /* slate-200 */
+  border-left-color: rgb(71 85 105); /* slate-600 */
+}
+
+/* Dark mode code blocks */
+.dark .prose code {
+  color: rgb(244 114 182) !important; /* pink-400 */
+  background-color: rgb(30 41 59); /* slate-800 */
+}
+
+/* Table responsive styles */
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-size: 0.95rem;
+  border: 1px solid rgb(226 232 240); /* slate-200 */
+}
+
+.dark .prose table {
+  border-color: rgb(51 65 85); /* slate-600 */
+}
+
+.prose table thead {
+  position: sticky;
+  top: 0;
+  background-color: rgb(255 255 255); /* white */
+  z-index: 10;
+  border-bottom: 2px solid rgb(226 232 240); /* slate-200 */
+}
+
+.dark .prose table thead {
+  background-color: rgb(17 24 39); /* gray-900 */
+  border-bottom-color: rgb(51 65 85); /* slate-600 */
+}
+
+.prose table th {
+  background-color: rgba(0, 0, 0, 0.02);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  min-width: 8rem;
+  white-space: nowrap;
+  position: relative;
+}
+
+.dark .prose table th {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.prose table td {
+  padding: 0.75rem 1rem;
+  min-width: 8rem;
+  white-space: nowrap;
+  border-top: 1px solid rgb(226 232 240); /* slate-200 */
+}
+
+.dark .prose table td {
+  border-top-color: rgb(51 65 85); /* slate-600 */
+}
+
+.prose table tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.dark .prose table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.prose table.auto-wrap td,
+.prose table.auto-wrap th {
+  white-space: normal;
+}
+
+.prose table tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.dark .prose table tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Styling for table scrollbar */
+.prose table::-webkit-scrollbar {
+  height: 6px;
+}
+
+.prose table::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.prose table::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.dark .prose table::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .prose table::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,150 @@
+---
+/**
+ * ResponsiveImage component
+ * 
+ * Optimizes images for different screen sizes and improves loading performance:
+ * - All blog post content images are standardized to 640px resolution by default
+ * - Hero images can be explicitly sized via the width prop
+ * - Images are zoomable through the custom modal in PostLayout.astro
+ * - Supports WebP with fallback to original format
+ * - Handles both local and external image sources
+ * 
+ * Uses optimized images created during the build process
+ * Works with the separated content repository structure
+ */
+import { resolveContentImagePath } from '../../lib/imagePathResolver';
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  width?: number;   // Can override default 640px width if needed
+  height?: number;
+  quality?: number;
+  densities?: number[];
+}
+
+const {
+  src,
+  alt,
+  class: className = '',
+  sizes = '(min-width: 1280px) 1280px, 100vw',
+  loading = 'lazy',
+  width = 800, // Default width if not specified
+  height,
+  quality = 80,
+  densities = [1], // Default to [1] if not specified
+
+} = Astro.props;
+
+// Resolve the content image path using our helper
+const resolvedSrc = resolveContentImagePath(src);
+
+// Determine if image is external (from a URL) or local
+const isExternal = resolvedSrc.startsWith('http');
+
+// Determine optimal image size based on component usage context
+// - Use 320px for PostCard images (home page thumbnails)
+// - Use 640px as default for blog post content images
+const getOptimalSize = () => {
+  // If width is explicitly set to a smaller value, use that as a hint
+  // that this is a thumbnail/preview image (like in PostCard)
+  if (width && width <= 400) {
+    return 320; // Smaller resolution for thumbnails/previews
+  }
+  
+  // Default to 640px for all regular content images (blog posts)
+  return 640;
+};
+
+// Get paths for optimized images
+let originalPath = resolvedSrc;
+let optimizedPath = resolvedSrc;
+let webpPath = resolvedSrc;
+
+// Skip optimization for author images - use them directly
+if (resolvedSrc && resolvedSrc.includes('/images/authors/')) {
+  // Author images are used directly without optimization
+  optimizedPath = resolvedSrc;
+  webpPath = resolvedSrc;
+}
+// For local images from uploads directory, use optimized versions
+else if (!isExternal && resolvedSrc && resolvedSrc.startsWith('/images/uploads/')) {
+  try {
+    // Use our optimized size function to get consistent sizing
+    const optimalSize = getOptimalSize();
+
+    const pathParts = resolvedSrc.split('/');
+
+    const filenameWithExt = pathParts.pop(); // e.g., 'image.jpg'
+
+    if (!filenameWithExt || !filenameWithExt.includes('.')) {
+      throw new Error('Filename with extension is invalid or missing extension.');
+    }
+
+    const filename = filenameWithExt.substring(0, filenameWithExt.lastIndexOf('.'));
+
+    const ext = filenameWithExt.substring(filenameWithExt.lastIndexOf('.')).toLowerCase(); // e.g., '.jpg'
+
+    const relativeSubPath = pathParts.slice(pathParts.indexOf('uploads') + 1).join('/');
+
+    const basePath = ('/images/optimized/' + (relativeSubPath ? relativeSubPath + '/' : '')).replace(/\/\/$/, '/'); // Ensure single trailing slash if subpath exists, or no slash if no subpath
+    
+    // Path to optimized image with specified width
+    optimizedPath = `${basePath}${filename}-${optimalSize}${ext}`;
+
+    // Path to WebP version for modern browsers
+    webpPath = `${basePath}${filename}-${optimalSize}.webp`;
+
+  } catch (error) {
+    console.error(`Error generating optimized image paths for: ${resolvedSrc}`, error);
+    // Fallback to original path if anything fails
+    optimizedPath = resolvedSrc;
+    webpPath = resolvedSrc;
+  }
+} else {
+}
+
+
+// Calculate aspect ratio and height if width is provided but height is missing
+const aspectRatio = width && height ? width / height : undefined;
+const calculatedHeight = width && !height && aspectRatio ? Math.round(width / aspectRatio) : height || Math.round(width / 1.5); // Default aspect ratio of 1.5 if no height specified
+---
+
+{
+  isExternal ? (
+    <img 
+      src={resolvedSrc} 
+      alt={alt}
+      class={`${className} object-cover dark:bg-white dark:border dark:border-gray-200 dark:shadow-md rounded-sm`}
+      loading={loading}
+      width={width}
+      height={calculatedHeight}
+      style={aspectRatio ? `aspect-ratio: ${width} / ${calculatedHeight};` : ''}
+      onerror="this.onerror=null; this.src='https://placehold.co/' + (this.width || 800) + 'x' + (this.height || 600) + '/CCCCCC/FFFFFF?text=Image+Not+Found'"
+    />
+  ) : (
+    <picture>
+      {/* WebP format for modern browsers */}
+      <source
+        srcset={webpPath}
+        type="image/webp"
+        sizes={sizes}
+      />
+      
+      {/* Original format as fallback */}
+      <img 
+        src={optimizedPath}
+        alt={alt}
+        class={`${className} object-cover dark:bg-white dark:border dark:border-gray-200 dark:shadow-md rounded-sm`}
+        loading={loading}
+        width={width}
+        height={calculatedHeight}
+        style={aspectRatio ? `aspect-ratio: ${width} / ${calculatedHeight};` : ''}
+        onerror="this.onerror=null; this.src='https://placehold.co/' + (this.width || 800) + 'x' + (this.height || 600) + '/CCCCCC/FFFFFF?text=Image+Not+Found'"
+      />
+    </picture>
+  )
+}

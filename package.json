@@ -1,0 +1,35 @@
+{
+  "name": "blog-cms",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "node src/scripts/prebuild.js && npm run update-content && node src/scripts/optimizeImages.js && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "optimize-images": "node src/scripts/optimizeImages.js",
+    "update-content": "bash ./scripts/update-content.sh",
+    "dev:with-content": "npm run update-content && npm run dev"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^1.1.0",
+    "@astrojs/react": "^3.0.2",
+    "@astrojs/sitemap": "^3.0.0",
+    "@astrojs/tailwind": "^5.0.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "astro": "^3.1.0",
+    "astro-seo": "^0.8.0",
+    "date-fns": "^2.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "typescript": "^5.2.2"
+  }
+}

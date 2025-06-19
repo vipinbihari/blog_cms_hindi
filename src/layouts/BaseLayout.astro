@@ -1,0 +1,109 @@
+---
+import { SEO } from 'astro-seo';
+import ConfigurableHeader from '../components/layout/ConfigurableHeader.astro';
+import ConfigurableFooter from '../components/layout/ConfigurableFooter.astro';
+import '../styles/global.css';
+import { BLOG_CONFIG } from '../config/current-config';
+import type { BaseLayoutProps } from '../types/content';
+import { generatePageTitle, generateOgImageUrl } from '../lib/seo';
+
+const {
+  title,
+  description = BLOG_CONFIG.site.description,
+  image,
+  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+} = Astro.props as BaseLayoutProps;
+
+const pageTitle = generatePageTitle(title || BLOG_CONFIG.site.name);
+const ogImage = generateOgImageUrl(title || BLOG_CONFIG.site.name, image);
+
+const initialBlogTheme = BLOG_CONFIG.theme?.darkMode ? 'dark' : 'light';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={BLOG_CONFIG.branding.favicon} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Theme initialization script (must be in head to avoid FOUC) -->
+    <script is:inline define:vars={{ initialConfiguredTheme: initialBlogTheme }}>
+      const getThemePreference = () => {
+        const storedTheme = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
+        
+        if (storedTheme) { // User has a saved preference
+          if (storedTheme === 'system') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          return storedTheme; // 'light' or 'dark'
+        }
+        
+        // No stored theme, use the initial theme from blog config (derived from darkMode setting)
+        // The 'system' option as a configured default is no longer available from BLOG_CONFIG directly.
+        // If initialConfiguredTheme itself was 'system' (which it isn't with current derivation), we'd handle it here.
+        return initialConfiguredTheme; // This will be 'light' or 'dark'
+      };
+      
+      const theme = getThemePreference();
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
+    
+    <SEO
+      title={pageTitle}
+      description={description}
+      canonical={canonicalURL ? canonicalURL.toString() : BLOG_CONFIG.site.url}
+      openGraph={{
+        basic: {
+          title: title || BLOG_CONFIG.site.name,
+          type: "website",
+          image: ogImage
+        },
+        optional: {
+          description: description,
+          siteName: BLOG_CONFIG.site.name,
+        }
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: title || BLOG_CONFIG.site.name,
+        description: description,
+        image: ogImage,
+        creator: BLOG_CONFIG.seo.twitterHandle,
+      }}
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+    <ConfigurableHeader />
+    
+    <main class="flex-1">
+      <slot />
+    </main>
+    
+    <ConfigurableFooter />
+    
+    <script>
+      // Theme toggle functionality
+      function initTheme() {
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+        if (!themeToggle) return;
+        
+        themeToggle.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.contains('dark');
+          const newTheme = isDark ? 'light' : 'dark';
+          
+          document.documentElement.classList.toggle('dark', newTheme === 'dark');
+          localStorage.setItem('theme', newTheme);
+        });
+      }
+      
+      // Initialize when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTheme);
+      } else {
+        initTheme();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+---
+interface NavigationItem {
+  label: string;
+  href: string;
+  icon?: string;
+  external?: boolean;
+  children?: NavigationItem[];
+}
+
+interface Props {
+  items: NavigationItem[];
+  variant: 'horizontal' | 'mobile';
+  class?: string;
+}
+
+const { items, variant, class: className = '' } = Astro.props;
+
+// Helper function to render icon
+const renderIcon = (icon?: string) => {
+  if (!icon) return '';
+  
+  // You can add more icon mappings here
+  const iconMap: Record<string, string> = {
+    home: `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+           </svg>`,
+    // Add more icons as needed
+  };
+  
+  return iconMap[icon] || '';
+};
+---
+
+{variant === 'horizontal' ? (
+  <!-- Horizontal Navigation (Desktop) -->
+  <div class={className}>
+    {items.map((item) => (
+      <a 
+        href={item.href}
+        class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+        target={item.external ? '_blank' : undefined}
+        rel={item.external ? 'noopener noreferrer' : undefined}
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+) : (
+  <!-- Mobile Navigation -->
+  <div class={className}>
+    {items.map((item) => (
+      <a 
+        href={item.href}
+        class="text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 px-6 py-4 font-medium transition-colors duration-200 flex items-center space-x-2"
+        target={item.external ? '_blank' : undefined}
+        rel={item.external ? 'noopener noreferrer' : undefined}
+      >
+        {item.icon && (
+          <Fragment set:html={renderIcon(item.icon)} />
+        )}
+        <span>{item.label}</span>
+        {item.external && (
+          <svg class="h-4 w-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        )}
+      </a>
+    ))}
+  </div>
+)} 

@@ -1,0 +1,75 @@
+name: Build and Deploy Blog
+
+on:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types: [content-update]
+  workflow_dispatch: # Allow manual triggering
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      # Create content directories manually as a fallback
+      - name: Create content directories
+        run: |
+          mkdir -p src/content/posts
+          mkdir -p public/images/uploads
+          
+      - name: Checkout content repository
+        uses: actions/checkout@v3
+        with:
+          repository: vipinbihari/blog_content_hindi
+          path: content
+          fetch-depth: 1
+          
+      - name: Debug directory structure
+        run: |
+          echo "Current directory structure:"
+          ls -la
+          echo "\nContent directory structure:"
+          ls -la content || echo "content directory not found"
+          echo "\nChecking for posts directory:"
+          ls -la content/posts || echo "posts directory not found"
+          echo "\nChecking for uploads directory:"
+          ls -la content/uploads || echo "uploads directory not found"
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+            
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build site
+        run: npm run build
+        
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+          
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

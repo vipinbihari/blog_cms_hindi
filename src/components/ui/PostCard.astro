@@ -1,0 +1,71 @@
+--- 
+// src/components/PostCard.astro
+import type { BlogPost } from '../../types/content';
+import ResponsiveImage from './ResponsiveImage.astro';
+import { BLOG_CONFIG } from '../../config/current-config';
+
+export interface Props {
+  post: BlogPost;
+  lazyLoadImage?: boolean;
+  class?: string;
+}
+
+const { post, lazyLoadImage = true, class: className = '' } = Astro.props;
+
+const postUrl = `/posts/${post.slug}/`;
+
+// Simple date formatter (can be replaced with a more robust one if needed)
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat(BLOG_CONFIG.site.locale || 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
+}
+---
+<article class={`group bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full ${className}`}>
+  <a href={postUrl} class="block">
+    {post.data.heroImage && (
+      <div class="aspect-video overflow-hidden bg-slate-200 dark:bg-slate-700 rounded-t-lg">
+        <ResponsiveImage 
+          src={post.data.heroImage} 
+          alt={post.data.heroImageAlt || post.data.title} 
+          width={400} 
+          height={225} 
+          densities={[1, 1.5, 2]}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+          loading={lazyLoadImage ? 'lazy' : 'eager'}
+        />
+      </div>
+    )}
+  </a>
+  <div class="p-5 sm:p-6 flex flex-col flex-grow">
+    <div class="mb-3">
+      <a 
+        href={`/categories/${post.data.category.toLowerCase().replace(/\s+/g, '-')}/page/1`} 
+        class="inline-block bg-primary-50 dark:bg-primary-800 text-primary-800 dark:text-primary-50 text-xs font-semibold px-3 py-1 rounded-full hover:bg-primary-100 dark:hover:bg-primary-700 transition-colors duration-300"
+      >
+        {post.data.category}
+      </a>
+    </div>
+    <h2 class="text-lg sm:text-xl font-bold mb-3 text-slate-800 dark:text-white leading-tight">
+      <a href={postUrl} class="no-underline hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300">
+        {post.data.title}
+      </a>
+    </h2>
+    <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 leading-relaxed flex-grow line-clamp-3">
+      {post.data.excerpt}
+    </p>
+    <div class="text-xs flex justify-between items-center pt-3 sm:pt-4 border-t border-slate-200 dark:border-slate-700">
+  <span class="font-semibold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent dark:from-pink-400 dark:via-orange-300 dark:to-yellow-200">
+    By {post.data.author}
+  </span>
+  <time 
+    datetime={post.data.date.toISOString()}
+    class="font-semibold text-blue-600 dark:text-blue-400"
+  >
+    {formatDate(post.data.date)}
+  </time>
+</div>
+  </div>
+</article>
