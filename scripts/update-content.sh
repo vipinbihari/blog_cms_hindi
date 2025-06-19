@@ -37,9 +37,9 @@ if [ -d "content/posts" ]; then
     
     echo "Content updated successfully!"
     exit 0
-elif [ -d "../blog_content/posts" ]; then
-    echo "Found content in ../blog_content/posts"
-    CONTENT_REPO_PATH="../blog_content"
+elif [ -d "../blog_content_hindi/posts" ]; then
+    echo "Found content in ../blog_content_hindi/posts"
+    CONTENT_REPO_PATH="../blog_content_hindi"
     # Copy content from the local repo
     echo "Syncing posts from content repository..."
     rsync -av --delete "$CONTENT_REPO_PATH/posts/" "$POSTS_DIR/"
@@ -55,14 +55,14 @@ elif [ -d "../blog_content/posts" ]; then
     exit 0
 else
     echo "Warning: Content repository not found in expected locations"
-    echo "Searched in: ./content/posts and ../blog_content/posts"
+    echo "Searched in: ./content/posts and ../blog_content_hindi/posts"
     
     # List contents of potential parent directories for debugging
     echo "\nContents of ./content (if exists):"
     ls -la content 2>/dev/null || echo "content directory doesn't exist"
     
-    echo "\nContents of ../blog_content (if exists):"
-    ls -la ../blog_content 2>/dev/null || echo "../blog_content directory doesn't exist"
+    echo "\nContents of ../blog_content_hindi (if exists):"
+    ls -la ../blog_content_hindi 2>/dev/null || echo "../blog_content_hindi directory doesn't exist"
     
     # In GitHub Actions, let's continue even if content repo is missing
     if [ -n "$GITHUB_ACTIONS" ]; then

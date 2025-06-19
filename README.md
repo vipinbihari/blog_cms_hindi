@@ -21,7 +21,7 @@ Use it to launch a technology, lifestyle, finance, food, travel – or completel
 
 ```bash
 # Clone the repo
-$ git clone https://github.com/your-org/blog_cms.git && cd blog_cms
+$ git clone https://github.com/your-org/blog_cms_hindi.git && cd blog_cms_hindi
 
 # Install dependencies (use sudo on Linux if you get EACCES)
 $ sudo npm install
@@ -96,7 +96,7 @@ Hot-reload means you will see changes instantly.
 ## 6  Project Structure (Top-Level)
 
 ```
-├── content/               # Content submodule (symlink from blog_content repo)
+├── content/               # Content submodule (symlink from blog_content_hindi repo)
 │   ├── posts/             # Blog posts in MDX format
 │   └── uploads/           # Blog post images
 ├── public/                # Static assets (images, icons, fonts…)
@@ -117,11 +117,11 @@ A deeper technical breakdown lives in **`technical_implementation.md`**.
 This blog uses a separated content architecture:
 
 - **Blog code** lives in this repository
-- **Blog content** (posts and images) lives in a separate repository (`/blog_content`)
+- **Blog content** (posts and images) lives in a separate repository (`/blog_content_hindi`)
 
 The content is integrated using symbolic links:
-- `/blog_content/posts` → `/blog_cms/src/content/posts`
-- `/blog_content/uploads` → `/blog_cms/public/images/uploads`
+- `/blog_content_hindi/posts` → `/blog_cms_hindi/src/content/posts`
+- `/blog_content_hindi/uploads` → `/blog_cms_hindi/public/images/uploads`
 
 This separation allows:
 - Independent versioning of content and code

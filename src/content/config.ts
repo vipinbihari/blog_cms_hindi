@@ -4,7 +4,7 @@ import { defineCollection, z } from 'astro:content';
  * BLOG CONTENT ARCHITECTURE
  * ------------------------
  * This project uses a separated content architecture:
- * - Blog content (posts and images) lives in a separate repository (/blog_content)
+ * - Blog content (posts and images) lives in a separate repository (/blog_content_hindi)
  * - The content repository is fetched during build time into the 'content' directory
  * - GitHub Actions workflow handles fetching the latest content before each build
  * 
