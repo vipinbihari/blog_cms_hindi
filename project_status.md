@@ -410,7 +410,6 @@ The old `src/utils/` directory has been removed and replaced with a modular libr
 - Implemented placeholder images for `heroImage` in `PostLayout.astro`, `index.astro` (featured posts), `RelatedPosts.astro`, category archive pages (`src/pages/categories/[category]/[page].astro`), and tag archive pages (`src/pages/tags/[tag]/[page].astro`) to prevent 404s and improve visual consistency.
 - Updated OpenGraph image fallbacks in `PostLayout.astro`, category archive pages, and tag archive pages to use placeholder images.
 - Corrected post link generation from `post.data.slug` to `post.slug` in `index.astro`, `RelatedPosts.astro`, category, and tag archive pages for consistency with Astro's `getCollection` API.
-- Added AI-powered blog post generation capability as a separate module under the `/llm` directory with its own server setup, API, and UI components. This module is completely isolated from the main blog and designed to be deployed independently on a separate server.
 
 ### CI/CD
 
@@ -712,96 +711,7 @@ The old `src/utils/` directory has been removed and replaced with a modular libr
 
 **Implementation Status**: Completed - New functionality
 
-### LLM Module
 
-#### Blog Generation
-
-##### generateBlogPostFromLLM(topicDescription: string, youtubeLink?: string, blogLinks?: string[], model?: AIModel): Promise<string>
-
-**Description**: Generates a complete blog post in MDX format using the specified AI model
-
-**Arguments**:
-- `topicDescription` (string): Description of the blog topic
-- `youtubeLink` (string, optional): Reference YouTube video link
-- `blogLinks` (string[], optional): Array of reference blog links
-- `model` (AIModel, optional): AI model to use (OpenAI GPT-4o or Google Gemini 2.5 Pro)
-
-**Returns**: Promise resolving to MDX content string
-
-**Dependencies**:
-- OpenAI API
-- Google Gemini API
-
-**Implementation Status**: Completed
-
-### Image Generation Module
-
-#### Image Generation
-
-##### generateImage(prompt: string, size?: ImageSize, qualityOrOutputPath?: ImageQuality | string, outputPath?: string): Promise<string>
-
-**Description**: Generates an image using OpenAI's GPT Image 1 model based on a text prompt
-
-**Arguments**:
-- `prompt` (string): Text description of the image to generate
-- `size` (ImageSize, optional): Size of the image to generate (default: 1024x1024)
-- `qualityOrOutputPath` (ImageQuality | string, optional): Either the quality setting or the output path
-- `outputPath` (string, optional): Path where the generated image should be saved
-
-**Available Image Sizes**:
-- `SQUARE`: 1024x1024 (Square format - cheapest option)
-- `PORTRAIT`: 1024x1536 (Portrait/tall format)
-- `LANDSCAPE`: 1536x1024 (Landscape/wide format)
-
-**Available Quality Settings**:
-- `HIGH`: Highest quality with more detail ($0.167-$0.25 per image)
-- `MEDIUM`: Medium quality, balanced between detail and speed ($0.042-$0.063 per image)
-- `LOW`: Lower quality but faster generation ($0.011-$0.016 per image)
-- `AUTO`: Automatically select the best quality (default)
-
-**Pricing Matrix**:
-
-| Quality | 1024x1024 | 1024x1536 | 1536x1024 |
-|---------|-----------|-----------|----------|
-| Low     | $0.011    | $0.016    | $0.016   |
-| Medium  | $0.042    | $0.063    | $0.063   |
-| High    | $0.167    | $0.25     | $0.25    |
-
-
-**Returns**: Promise resolving to image URL or file path (if outputPath provided)
-
-**Dependencies**:
-- OpenAI API
-
-**Example Usage**:
-```typescript
-// Generate and save an image with default quality (AUTO)
-await generateImage(
-  'A professional illustration of cryptocurrency trading in India',
-  ImageSizes.SQUARE,
-  'public/images/hero-images/crypto-trading.png'
-);
-
-// Generate high quality landscape image (most expensive option)
-await generateImage(
-  'A professional illustration of cryptocurrency trading in India',
-  ImageSizes.LANDSCAPE,
-  ImageQuality.HIGH,
-  'public/images/hero-images/crypto-trading-hd.png'
-);
-
-// Generate low quality portrait image (cost-effective option)
-await generateImage(
-  'A professional illustration of cryptocurrency trading in India',
-  ImageSizes.PORTRAIT,
-  ImageQuality.LOW,
-  'public/images/hero-images/crypto-trading-portrait.png'
-);
-```
-
-**Implementation Status**: Completed
-
-## Database Schema
 
 The application uses Astro Content Collections instead of a traditional database. The schema is defined in:
 

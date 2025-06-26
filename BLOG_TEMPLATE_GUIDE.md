@@ -184,6 +184,41 @@ typography: {
 }
 ```
 
+## 🏞️ Hero Section Configuration
+
+### Background Image Options
+
+The hero section on the homepage can be customized with a configurable background image:
+
+```typescript
+layout: {
+  // Other layout settings...
+  heroConfig: {
+    title: 'Welcome to Your Blog',
+    subtitle: 'Discover amazing content and resources',
+    ctaButton1: { text: 'Explore Articles', url: '/posts/page/1' },
+    ctaButton2: { text: 'About Us', url: '/about' },
+    
+    // Option 1: Simple string path
+    heroBackgroundImage: '/images/blog/home-background.jpg',
+    
+    // Option 2: Comprehensive object configuration
+    heroBackgroundImage: {
+      src: '/images/blog/home-background.jpg',
+      alt: 'Hero background image',
+      width: 1920,
+      height: 400
+    }
+  }
+}
+```
+
+The hero section automatically adapts to the current theme:
+- In light mode: White overlay with dark text
+- In dark mode: Dark overlay with light text
+
+This ensures optimal readability regardless of the background image used.
+
 ## 🧭 Navigation & Branding
 
 ### Usage

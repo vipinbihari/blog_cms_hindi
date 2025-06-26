@@ -21,7 +21,7 @@ Use it to launch a technology, lifestyle, finance, food, travel – or completel
 
 ```bash
 # Clone the repo
-$ git clone https://github.com/your-org/blog_cms_hindi.git && cd blog_cms_hindi
+$ git clone https://github.com/your-org/blog_cms.git && cd blog_cms
 
 # Install dependencies (use sudo on Linux if you get EACCES)
 $ sudo npm install
@@ -60,6 +60,7 @@ Deploy the generated **`dist/`** directory to Vercel, Netlify, Cloudflare Pages,
    - **Social links are managed exclusively via the top-level `BLOG_CONFIG.social` array**. Add, remove, or modify your social profiles there.
    - **Centralized site URL/email:** The site URL and contact email are now managed centrally in config and used throughout the project.
    - **Dark mode link styling:** In dark mode, all links inside `.prose` content are light blue/white for readability. Social media icon links are now excluded from this forced color to preserve their brand colors.
+   - **Configurable hero background:** The homepage hero section supports a custom background image via `BLOG_CONFIG.layout.heroConfig.heroBackgroundImage`. You can use either a simple string path or a comprehensive object with src, alt, width, and height properties.
 2. **Write posts** – place markdown/MDX files in `src/content/posts/`.  
    Front-matter controls category, tags, `featured` flag, hero images, etc.
    - **Featured Posts:** Only posts with `featured: true` in their front-matter will appear in the homepage featured section. If you do not set `featured: true`, your post will not be shown as featured, even if there are fewer featured posts than the configured limit.
@@ -96,7 +97,7 @@ Hot-reload means you will see changes instantly.
 ## 6  Project Structure (Top-Level)
 
 ```
-├── content/               # Content submodule (symlink from blog_content_hindi repo)
+├── content/               # Content submodule (symlink from blog_content repo)
 │   ├── posts/             # Blog posts in MDX format
 │   └── uploads/           # Blog post images
 ├── public/                # Static assets (images, icons, fonts…)
@@ -117,11 +118,11 @@ A deeper technical breakdown lives in **`technical_implementation.md`**.
 This blog uses a separated content architecture:
 
 - **Blog code** lives in this repository
-- **Blog content** (posts and images) lives in a separate repository (`/blog_content_hindi`)
+- **Blog content** (posts and images) lives in a separate repository (`/blog_content`)
 
 The content is integrated using symbolic links:
-- `/blog_content_hindi/posts` → `/blog_cms_hindi/src/content/posts`
-- `/blog_content_hindi/uploads` → `/blog_cms_hindi/public/images/uploads`
+- `/blog_content/posts` → `/blog_cms/src/content/posts`
+- `/blog_content/uploads` → `/blog_cms/public/images/uploads`
 
 This separation allows:
 - Independent versioning of content and code

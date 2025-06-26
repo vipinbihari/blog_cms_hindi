@@ -3,6 +3,9 @@
 # Script to update blog content from the separate content repository
 # This script is used both for local development and CI/CD
 
+# Define content repository name (can be changed as needed)
+CONTENT_REPO_NAME="blog_content_hindi"
+
 # Debug output to help troubleshoot
 echo "Current directory: $(pwd)"
 echo "Directory contents:"
@@ -37,9 +40,9 @@ if [ -d "content/posts" ]; then
     
     echo "Content updated successfully!"
     exit 0
-elif [ -d "../blog_content_hindi/posts" ]; then
-    echo "Found content in ../blog_content_hindi/posts"
-    CONTENT_REPO_PATH="../blog_content_hindi"
+elif [ -d "../${CONTENT_REPO_NAME}/posts" ]; then
+    echo "Found content in ../${CONTENT_REPO_NAME}/posts"
+    CONTENT_REPO_PATH="../${CONTENT_REPO_NAME}"
     # Copy content from the local repo
     echo "Syncing posts from content repository..."
     rsync -av --delete "$CONTENT_REPO_PATH/posts/" "$POSTS_DIR/"
@@ -55,14 +58,14 @@ elif [ -d "../blog_content_hindi/posts" ]; then
     exit 0
 else
     echo "Warning: Content repository not found in expected locations"
-    echo "Searched in: ./content/posts and ../blog_content_hindi/posts"
+    echo "Searched in: ./content/posts and ../${CONTENT_REPO_NAME}/posts"
     
     # List contents of potential parent directories for debugging
     echo "\nContents of ./content (if exists):"
     ls -la content 2>/dev/null || echo "content directory doesn't exist"
     
-    echo "\nContents of ../blog_content_hindi (if exists):"
-    ls -la ../blog_content_hindi 2>/dev/null || echo "../blog_content_hindi directory doesn't exist"
+    echo "\nContents of ../${CONTENT_REPO_NAME} (if exists):"
+    ls -la ../${CONTENT_REPO_NAME} 2>/dev/null || echo "../${CONTENT_REPO_NAME} directory doesn't exist"
     
     # In GitHub Actions, let's continue even if content repo is missing
     if [ -n "$GITHUB_ACTIONS" ]; then

@@ -24,6 +24,13 @@ export interface HeroCtaButton {
   url: string;
 }
 
+export interface HeroBackgroundImage {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+}
+
 export interface HeroConfig {
   title?: string;
   subtitle?: string;
@@ -31,6 +38,7 @@ export interface HeroConfig {
   ctaButton2?: HeroCtaButton;
   image?: HeroConfigImage;
   showImage?: boolean;
+  heroBackgroundImage?: string | HeroBackgroundImage;
 }
 
 export interface BlogConfig {
@@ -111,6 +119,10 @@ export interface BlogConfig {
   // Post Configuration
   // Social Media & Integrations
   social: SocialLink[];
+  
+  // Component Configurations
+  upstoxCTA?: UpstoxCTAConfig; // Configuration for the UpstoxCTA component
+  authors?: Record<string, AuthorData>; // Configuration for author information
   
   // SEO & Advanced
   seo?: {
@@ -266,6 +278,40 @@ export interface AboutPageConfig {
   };
 }
 
+// UpstoxCTA Component Configuration
+export interface UpstoxCTAConfig {
+  enabled: boolean; // Whether to show the component
+  title: string;
+  logo: {
+    src: string;
+    alt: string;
+  };
+  badge?: {
+    text: string;
+    showBadge: boolean;
+  };
+  description: string;
+  features: string[];
+  ctaSection: {
+    title: string;
+    buttonText: string;
+    buttonUrl: string;
+    disclaimer?: string;
+  };
+}
+
+// Author Configuration
+export interface AuthorData {
+  bio: string;
+  avatar: string;
+  twitter?: string;
+  linkedin?: string;
+  instagram?: string;
+  facebook?: string;
+  github?: string;
+  website?: string;
+}
+
 // Legal Pages Configuration
 export interface LegalPagesConfig {
   privacy: {
@@ -296,6 +342,34 @@ export interface LegalPagesConfig {
 
 // Pre-built theme configurations
 export const THEME_PRESETS = {
+  teal: {
+    primary: {
+      50: '#f0fdfa',
+      100: '#ccfbf1',
+      200: '#99f6e4',
+      300: '#5eead4',
+      400: '#2dd4bf',
+      500: '#14b8a6',
+      600: '#0d9488',
+      700: '#0f766e',
+      800: '#115e59',
+      900: '#134e4a',
+      950: '#042f2e',
+    },
+    secondary: {
+      50: '#f1f5f9',
+      100: '#e2e8f0',
+      200: '#cbd5e1',
+      300: '#94a3b8',
+      400: '#64748b',
+      500: '#475569',
+      600: '#334155',
+      700: '#1e293b',
+      800: '#0f172a',
+      900: '#020617',
+      950: '#000c13',
+    }
+  },
   blue: {
     primary: {
       50: '#eff6ff',

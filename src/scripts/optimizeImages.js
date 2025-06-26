@@ -1,5 +1,5 @@
 /**
- * Image optimization script for blog_cms_hindi
+ * Image optimization script for blog_cms
  * Processes images in public/images/uploads and creates optimized versions
  */
 

@@ -4,6 +4,9 @@
  * Allows users to subscribe to the blog's newsletter
  */
 
+
+import { BLOG_CONFIG } from '../../config/current-config';
+
 interface Props {
   title?: string;
   description?: string;
@@ -46,9 +49,8 @@ const formClasses = {
   
   <form 
     class={formClasses[position]}
-    action="#"
-    method="post"
-    onsubmit="alert('This would submit to a real newsletter service in production!'); return false;"
+    action={`https://formsubmit.co/${BLOG_CONFIG.site.email}`}
+    method="POST"
   >
     <input 
       type="email" 

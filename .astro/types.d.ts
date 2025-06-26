@@ -185,9 +185,79 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
-"share-bazaar-ki-abcd-beginners-guide.mdx": {
-	id: "share-bazaar-ki-abcd-beginners-guide.mdx";
-  slug: "share-bazaar-ki-abcd-beginners-guide";
+"algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx": {
+	id: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx";
+  slug: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"bazaar-ka-u-turn-sensex-ceasefire-news.mdx": {
+	id: "bazaar-ka-u-turn-sensex-ceasefire-news.mdx";
+  slug: "bazaar-ka-u-turn-sensex-ceasefire-news";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"bazar-me-uchhal-defence-stocks-dhadham.mdx": {
+	id: "bazar-me-uchhal-defence-stocks-dhadham.mdx";
+  slug: "bazar-me-uchhal-defence-stocks-dhadham";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"fundamental-analysis-kya-hai-day-3.mdx": {
+	id: "fundamental-analysis-kya-hai-day-3.mdx";
+  slug: "fundamental-analysis-kya-hai-day-3";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"iran-america-tanav-sensex-tuta-niveshak-kya-kare.mdx": {
+	id: "iran-america-tanav-sensex-tuta-niveshak-kya-kare.mdx";
+  slug: "iran-america-tanav-sensex-tuta-niveshak-kya-kare";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazar-guide-day-2-demat-se-pehli-trade.mdx": {
+	id: "share-bazar-guide-day-2-demat-se-pehli-trade.mdx";
+  slug: "share-bazar-guide-day-2-demat-se-pehli-trade";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazar-ki-abcd-day-1-basics.mdx": {
+	id: "share-bazar-ki-abcd-day-1-basics.mdx";
+  slug: "share-bazar-ki-abcd-day-1-basics";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx": {
+	id: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx";
+  slug: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare.mdx": {
+	id: "tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare.mdx";
+  slug: "tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"upstox-kya-hai-2024-guide.mdx": {
+	id: "upstox-kya-hai-2024-guide.mdx";
+  slug: "upstox-kya-hai-2024-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"zerodha-review-2025-hindi.mdx": {
+	id: "zerodha-review-2025-hindi.mdx";
+  slug: "zerodha-review-2025-hindi";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

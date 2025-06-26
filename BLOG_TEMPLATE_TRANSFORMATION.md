@@ -7,6 +7,7 @@
 - Refactored homepage and related posts for consistency and maintainability.
 - Enhanced dark mode and social icon accessibility.
 - Integrated a lightweight custom zoom modal for hero and in-post images (excluding homepage post cards).
+- Replaced water ripple animation with configurable hero background image system.
 
 ## 📊 Transformation Summary
 

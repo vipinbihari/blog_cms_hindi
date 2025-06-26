@@ -2,6 +2,7 @@
 /**
  * AuthorBio component
  * Displays information about a post author
+ * Uses author data from central config file
  */
 import ResponsiveImage from '../ui/ResponsiveImage.astro';
 import { BLOG_CONFIG } from '../../config/current-config';
@@ -10,25 +11,10 @@ interface Props {
   name: string;
 }
 
-// Author data - in a real implementation, this would come from a CMS or database
-const authorData = {
-  'Vipin Bihari': {
-    bio: 'Vipin Bihari is a seasoned financial analyst with over 15 years of experience in investment banking and portfolio management.',
-    avatar: '/images/authors/vipin-bihari.webp',
-    twitter: '@bihari_web',
-    linkedin: '@bihari_web'
-  },
-  "Praveen": {
-    bio: 'Praveen is a seasoned financial analyst with over 15 years of experience in investment banking and portfolio management.',
-    avatar: '/images/authors/praveen.jpg',
-    twitter: '@praveen',
-    linkedin: '@praveen'
-  }
-};
-
 const { name } = Astro.props;
-const author = authorData[name] || {
-    bio: `${name} is a contributor to ${BLOG_CONFIG.site.name}.`,
+// Get author data from central config
+const author = BLOG_CONFIG.authors?.[name] || {
+  bio: `${name} is a contributor to ${BLOG_CONFIG.site.name}.`,
   avatar: 'https://placehold.co/100x100?text=Author',
   twitter: '',
   linkedin: ''
@@ -62,7 +48,7 @@ const author = authorData[name] || {
         <div class="mt-4 flex justify-center sm:justify-start gap-3">
           {author.twitter && (
             <a 
-              href={`https://twitter.com/${author.twitter}`}
+              href={`https://twitter.com/${author.twitter.startsWith('@') ? author.twitter.substring(1) : author.twitter}`}
               target="_blank"
               rel="noopener noreferrer"
               class="flex items-center justify-center w-9 h-9 bg-[#1DA1F2] text-white rounded-full hover:opacity-80 transition-opacity"
@@ -76,7 +62,7 @@ const author = authorData[name] || {
           
           {author.linkedin && (
             <a 
-              href={`https://linkedin.com/in/${author.linkedin}`}
+              href={`https://linkedin.com/in/${author.linkedin.startsWith('@') ? author.linkedin.substring(1) : author.linkedin}`}
               target="_blank"
               rel="noopener noreferrer"
               class="flex items-center justify-center w-9 h-9 bg-[#0A66C2] text-white rounded-full hover:opacity-80 transition-opacity"
