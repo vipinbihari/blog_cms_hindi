@@ -58,12 +58,12 @@ const components = {
       <div class="md:w-3/4 order-1">
         <article class="prose dark:prose-invert lg:prose-lg max-w-none">
       <header class="mb-8">
-        <div class="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-2">
-          <span>{category}</span>
-          <span>•</span>
-          <FormattedDate date={date} />
-          <span>•</span>
-          <span>By {author}</span>
+        <div class="flex flex-wrap items-center text-sm gap-4 mb-2">
+          <span class="text-primary-600 dark:text-primary-400">{category}</span>
+          <span class="text-gray-500 dark:text-gray-500">•</span>
+          <span class="text-primary-600 dark:text-primary-400"><FormattedDate date={date} /></span>
+          <span class="text-gray-500 dark:text-gray-500">•</span>
+          <span class="text-primary-600 dark:text-primary-400">By {author}</span>
         </div>
         
         <h1 class="text-3xl md:text-4xl font-bold mb-4">{title}</h1>

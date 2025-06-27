@@ -135,7 +135,8 @@ This separation allows:
 
 - The homepage carousels (featured/latest posts) support smooth drag scrolling and clickable post cards.
 - **Featured posts carousel only shows posts with `featured: true`.** There is no fallback to regular posts if there are not enough featured posts.
-- **Clicking a post card** navigates to the post as expected. Dragging (with mouse or touch) will not interfere with click events.
+- **Fully clickable post cards:** The entire post card is now clickable to navigate to the post. Category links still maintain their specific functionality when clicked.
+- **Consistent theme colors:** Post dates now use primary theme colors (matching author name styling) for visual consistency across the site.
 - **Navigation dots** below each carousel match the number of posts and show post numbers for clarity.
 - **Dark mode accessibility:** All carousel controls and dots have high-contrast colors in dark mode.
 - **Known issue:** If you add custom wrappers around `PostCard`, ensure they do not block pointer events.

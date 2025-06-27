@@ -23,7 +23,7 @@ function formatDate(date: Date): string {
   }).format(date);
 }
 ---
-<article class={`group bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full ${className}`}>
+<article class={`group bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full ${className} cursor-pointer`} data-post-url={postUrl}>
   <a href={postUrl} class="block">
     {post.data.heroImage && (
       <div class="aspect-video overflow-hidden bg-slate-200 dark:bg-slate-700 rounded-t-lg">
@@ -57,15 +57,46 @@ function formatDate(date: Date): string {
       {post.data.excerpt}
     </p>
     <div class="text-xs flex justify-between items-center pt-3 sm:pt-4 border-t border-slate-200 dark:border-slate-700">
-  <span class="font-semibold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent dark:from-pink-400 dark:via-orange-300 dark:to-yellow-200">
+  <span class="font-semibold text-primary-600 dark:text-primary-400">
     By {post.data.author}
   </span>
   <time 
     datetime={post.data.date.toISOString()}
-    class="font-semibold text-blue-600 dark:text-blue-400"
+    class="font-semibold text-primary-600 dark:text-primary-400"
   >
     {formatDate(post.data.date)}
   </time>
 </div>
   </div>
 </article>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle click events on post cards
+    const setupPostCards = () => {
+      const postCards = document.querySelectorAll('article[data-post-url]');
+      
+      postCards.forEach(card => {
+        card.addEventListener('click', (event) => {
+          // Get the post URL from data attribute
+          const postUrl = card.getAttribute('data-post-url');
+          
+          // Check if the click was on or inside any anchor element
+          const clickedAnchor = (event.target as Element).closest('a');
+          
+          // If clicked on an anchor (category link or title link), let the default behavior happen
+          // Otherwise navigate to the post URL
+          if (!clickedAnchor) {
+            window.location.href = postUrl;
+          }
+        });
+      });
+    };
+    
+    // Set up post card click handlers
+    setupPostCards();
+    
+    // Also set up when page content changes (for client-side navigation if applicable)
+    document.addEventListener('astro:after-swap', setupPostCards);
+  });
+</script>

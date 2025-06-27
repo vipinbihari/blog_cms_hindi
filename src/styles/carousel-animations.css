@@ -1,5 +1,12 @@
 /* Carousel Animations and Styling */
 
+/* Define theme color variables */
+:root {
+  --theme-primary-color: var(--primary-color, #4B5563); /* Use primary color from config */
+  --theme-secondary-color: var(--secondary-color, #60A5FA); /* Use secondary color from config */
+  --scroll-indicator-color: rgba(255, 255, 255, 0.15);
+}
+
 /* Post card focus animation - only on mobile */
 @media (max-width: 768px) {
   .carousel-card {
@@ -91,14 +98,14 @@
 }
 
 .scroll-dot.active {
-  background-color: var(--dot-active-color);
+  background-color: var(--theme-primary-color);
   transform: scale(1.25);
   color: white;
   font-weight: 700;
 }
 
 .dark .scroll-dot.active {
-  background-color: #60A5FA; /* blue-400 for better contrast */
+  background-color: var(--theme-primary-color); /* Using theme primary color */
   color: #1F2937; /* gray-800 */
   border-color: rgba(255, 255, 255, 0.5);
 }
@@ -197,23 +204,25 @@
   
   :root {
     --scroll-indicator-color: rgba(255, 255, 255, 0.2);
-    --dot-active-color: #4B5563; /* gray-600 */
   }
   
   .dark {
     --scroll-indicator-color: rgba(0, 0, 0, 0.2);
-    --dot-active-color: #E5E7EB; /* gray-200 */
   }
 }
 
 @media (min-width: 769px) {
-  :root {
-    --scroll-indicator-color: rgba(255, 255, 255, 0.15);
-    --dot-active-color: #4B5563; /* gray-600 */
-  }
-  
-  .dark {
-    --scroll-indicator-color: rgba(0, 0, 0, 0.15);
-    --dot-active-color: #E5E7EB; /* gray-200 */
-  }
+:root {
+--scroll-indicator-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark {
+--scroll-indicator-color: rgba(0, 0, 0, 0.15);
+}
+}
+
+/* Add CSS variables for theme colors */
+:root {
+--theme-primary-color: var(--primary-color, #4B5563); /* Use primary color from config */
+--theme-secondary-color: var(--secondary-color, #60A5FA); /* Use secondary color from config */
 }
