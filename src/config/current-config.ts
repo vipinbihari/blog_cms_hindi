@@ -9,7 +9,7 @@ import type { BlogConfig } from './blog-template';
 import { THEME_PRESETS } from './blog-template';
 
 // वर्तमान सक्रिय कॉन्फ़िगरेशन
-const siteName = 'ज्ञान सो';
+const siteName = 'ज्ञानसो';
 const siteUrl = `https://gyanso.com`;
 
 export const BLOG_CONFIG: BlogConfig = {
@@ -262,7 +262,7 @@ export const BLOG_CONFIG: BlogConfig = {
 
   // लेखक
   authors: {
-    Neelam: {
+    'Neelam': {
       bio: 'Neelam सरल शब्दों में market की जटिल जानकारी साझा करती हैं।',
       avatar: '/images/authors/neelam.png',
       twitter: '@neelam_kandhi',
