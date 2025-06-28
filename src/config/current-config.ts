@@ -28,15 +28,15 @@ export const BLOG_CONFIG: BlogConfig = {
   // ब्रांडिंग
   branding: {
     logo: {
-      light: '/images/blog/logo_neelam.png',
-      dark: '/images/blog/logo_neelam.png',
+      light: '/images/blog/gyanso-logo-final-256.png',
+      dark: '/images/blog/gyanso-logo-final-256.png',
       alt: `${siteName} लोगो`,
       width: 180,
       height: 40,
     },
-    favicon: '/images/blog/logo_neelam.png',
-    ogImage: '/images/blog/logo_neelam.png',
-    appleTouchIcon: '/images/apple-touch-icon.png',
+    favicon: '/images/blog/gyanso-logo-final-64.png',
+    ogImage: '/images/blog/gyanso-logo-final-256.png',
+    appleTouchIcon: '/images/blog/gyanso-logo-final-256.png',
     placeholderImageService: 'https://placehold.co',
   },
 

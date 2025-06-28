@@ -206,9 +206,30 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"financial-statements-kaise-padhen-beginners-guide-hindi.mdx": {
+	id: "financial-statements-kaise-padhen-beginners-guide-hindi.mdx";
+  slug: "financial-statements-kaise-padhen-beginners-guide-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "fundamental-analysis-kya-hai-day-3.mdx": {
 	id: "fundamental-analysis-kya-hai-day-3.mdx";
   slug: "fundamental-analysis-kya-hai-day-3";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"fundamental-analysis-kya-hai-stock-value-guide.mdx": {
+	id: "fundamental-analysis-kya-hai-stock-value-guide.mdx";
+  slug: "fundamental-analysis-kya-hai-stock-value-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx": {
+	id: "ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx";
+  slug: "ipo-se-listing-tak-company-ke-public-hone-ka-safar";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -220,9 +241,37 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx": {
+	id: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx";
+  slug: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazaar-record-breaking-rally-sensex-crosses-84000.mdx": {
+	id: "share-bazaar-record-breaking-rally-sensex-crosses-84000.mdx";
+  slug: "share-bazaar-record-breaking-rally-sensex-crosses-84000";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "share-bazar-guide-day-2-demat-se-pehli-trade.mdx": {
 	id: "share-bazar-guide-day-2-demat-se-pehli-trade.mdx";
   slug: "share-bazar-guide-day-2-demat-se-pehli-trade";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazar-kaise-kaam-karta-hai-hindi.mdx": {
+	id: "share-bazar-kaise-kaam-karta-hai-hindi.mdx";
+  slug: "share-bazar-kaise-kaam-karta-hai-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen.mdx": {
+	id: "share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen.mdx";
+  slug: "share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -234,9 +283,65 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide.mdx": {
+	id: "share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide.mdx";
+  slug: "share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx": {
 	id: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx";
   slug: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai.mdx": {
+	id: "share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai.mdx";
+  slug: "share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"stock-market-index-kya-hota-hai.mdx": {
+	id: "stock-market-index-kya-hota-hai.mdx";
+  slug: "stock-market-index-kya-hota-hai";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"stock-market-mein-risk-management-apni-capital-kaise-bachayein.mdx": {
+	id: "stock-market-mein-risk-management-apni-capital-kaise-bachayein.mdx";
+  slug: "stock-market-mein-risk-management-apni-capital-kaise-bachayein";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"stock-market-tax-rules-india-fy-2024-25.mdx": {
+	id: "stock-market-tax-rules-india-fy-2024-25.mdx";
+  slug: "stock-market-tax-rules-india-fy-2024-25";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies.mdx": {
+	id: "stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies.mdx";
+  slug: "stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"stocks-kitne-prakar-ke-hote-hain.mdx": {
+	id: "stocks-kitne-prakar-ke-hote-hain.mdx";
+  slug: "stocks-kitne-prakar-ke-hote-hain";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"technical-analysis-basics-charts-trends-hindi.mdx": {
+	id: "technical-analysis-basics-charts-trends-hindi.mdx";
+  slug: "technical-analysis-basics-charts-trends-hindi";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -248,9 +353,23 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"trading-vs-investing-kya-hai-behtar-guide.mdx": {
+	id: "trading-vs-investing-kya-hai-behtar-guide.mdx";
+  slug: "trading-vs-investing-kya-hai-behtar-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "upstox-kya-hai-2024-guide.mdx": {
 	id: "upstox-kya-hai-2024-guide.mdx";
   slug: "upstox-kya-hai-2024-guide";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"what-is-fno-futures-and-options-explained-hindi.mdx": {
+	id: "what-is-fno-futures-and-options-explained-hindi.mdx";
+  slug: "what-is-fno-futures-and-options-explained-hindi";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
