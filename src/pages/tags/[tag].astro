@@ -3,20 +3,33 @@ import { getAllPosts } from '../../lib/content';
 import PostCard from '../../components/ui/PostCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// Function to create URL-safe slugs for tags
+function slugifyTag(tag: string): string {
+  return tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+    .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
+    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+}
+
 export async function getStaticPaths() {
   const posts = await getAllPosts();
   const tags = Array.from(new Set(posts.flatMap(post => post.data.tags || [])));
-  return tags.map(tag => ({ params: { tag } }));
+  return tags.map(tag => ({ 
+    params: { tag: slugifyTag(tag) },
+    props: { originalTag: tag }
+  }));
 }
 
 const { tag } = Astro.params;
-const posts = (await getAllPosts()).filter(post => (post.data.tags || []).includes(tag));
+const { originalTag } = Astro.props;
+const posts = (await getAllPosts()).filter(post => (post.data.tags || []).includes(originalTag));
 ---
 
-<BaseLayout title={`Posts tagged "${tag}"`} description={`All blog posts tagged with '${tag}'.`}>
+<BaseLayout title={`Posts tagged "${originalTag}"`} description={`All blog posts tagged with '${originalTag}'.`}>
   <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-      Posts tagged <span class="text-primary-600 dark:text-primary-400">"{tag}"</span>
+      Posts tagged <span class="text-primary-600 dark:text-primary-400">"{originalTag}"</span>
     </h1>
     {posts.length === 0 ? (
       <p class="text-center text-lg text-gray-500 dark:text-gray-400">No posts found for this tag.</p>
