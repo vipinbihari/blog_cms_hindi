@@ -2,15 +2,7 @@
 import { getAllPosts } from '../../lib/content';
 import PostCard from '../../components/ui/PostCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-
-// Function to create URL-safe slugs for tags
-function slugifyTag(tag: string): string {
-  return tag
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
-    .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
-    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
-}
+import { slugifyTag } from '../../lib/slugify';
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();

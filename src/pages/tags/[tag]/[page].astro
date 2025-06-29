@@ -6,15 +6,7 @@ import PageNavigation from '../../../components/features/PageNavigation.astro';
 import ResponsiveImage from '../../../components/ui/ResponsiveImage.astro';
 import { SEO } from 'astro-seo';
 import { BLOG_CONFIG } from '../../../config/current-config';
-
-// Function to create URL-safe slugs for tags
-function slugifyTag(tag: string): string {
-  return tag
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
-    .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
-    .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
-}
+import { slugifyTag } from '../../../lib/slugify';
 
 export async function getStaticPaths({ paginate }) {
   // Get all posts to extract unique tags

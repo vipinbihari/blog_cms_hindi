@@ -185,6 +185,20 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
+"4-big-stock-market-mistakes-hindi.mdx": {
+	id: "4-big-stock-market-mistakes-hindi.mdx";
+  slug: "4-big-stock-market-mistakes-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"algo-and-high-frequency-trading-india.mdx": {
+	id: "algo-and-high-frequency-trading-india.mdx";
+  slug: "algo-and-high-frequency-trading-india";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx": {
 	id: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx";
   slug: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide";
@@ -202,6 +216,27 @@ declare module 'astro:content' {
 "bazar-me-uchhal-defence-stocks-dhadham.mdx": {
 	id: "bazar-me-uchhal-defence-stocks-dhadham.mdx";
   slug: "bazar-me-uchhal-defence-stocks-dhadham";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"bull-and-bear-market-cycles-india.mdx": {
+	id: "bull-and-bear-market-cycles-india.mdx";
+  slug: "bull-and-bear-market-cycles-india";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"corporate-actions-explained-dividend-stock-split-bonus-guide-hindi.mdx": {
+	id: "corporate-actions-explained-dividend-stock-split-bonus-guide-hindi.mdx";
+  slug: "corporate-actions-explained-dividend-stock-split-bonus-guide-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"esg-investing-kya-hai-india-guide.mdx": {
+	id: "esg-investing-kya-hai-india-guide.mdx";
+  slug: "esg-investing-kya-hai-india-guide";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -227,6 +262,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"global-investing-indian-investors-foreign-stocks.mdx": {
+	id: "global-investing-indian-investors-foreign-stocks.mdx";
+  slug: "global-investing-indian-investors-foreign-stocks";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"indias-3-biggest-stock-market-scams-lessons-learned.mdx": {
+	id: "indias-3-biggest-stock-market-scams-lessons-learned.mdx";
+  slug: "indias-3-biggest-stock-market-scams-lessons-learned";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx": {
 	id: "ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx";
   slug: "ipo-se-listing-tak-company-ke-public-hone-ka-safar";
@@ -241,9 +290,30 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"macro-factors-economy-policies-drive-investments-hindi.mdx": {
+	id: "macro-factors-economy-policies-drive-investments-hindi.mdx";
+  slug: "macro-factors-economy-policies-drive-investments-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx": {
 	id: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx";
   slug: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"passive-investing-index-funds-vs-etfs-india.mdx": {
+	id: "passive-investing-index-funds-vs-etfs-india.mdx";
+  slug: "passive-investing-index-funds-vs-etfs-india";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"psychology-of-investing-behavioral-biases-in-stock-market.mdx": {
+	id: "psychology-of-investing-behavioral-biases-in-stock-market.mdx";
+  slug: "psychology-of-investing-behavioral-biases-in-stock-market";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -304,6 +374,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"share-market-ke-3-maharathi-retail-dii-fii-investors.mdx": {
+	id: "share-market-ke-3-maharathi-retail-dii-fii-investors.mdx";
+  slug: "share-market-ke-3-maharathi-retail-dii-fii-investors";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "stock-market-index-kya-hota-hai.mdx": {
 	id: "stock-market-index-kya-hota-hai.mdx";
   slug: "stock-market-index-kya-hota-hai";
@@ -332,6 +409,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
+"stock-trading-hidden-charges-india.mdx": {
+	id: "stock-trading-hidden-charges-india.mdx";
+  slug: "stock-trading-hidden-charges-india";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
 "stocks-kitne-prakar-ke-hote-hain.mdx": {
 	id: "stocks-kitne-prakar-ke-hote-hain.mdx";
   slug: "stocks-kitne-prakar-ke-hote-hain";
@@ -342,6 +426,13 @@ declare module 'astro:content' {
 "technical-analysis-basics-charts-trends-hindi.mdx": {
 	id: "technical-analysis-basics-charts-trends-hindi.mdx";
   slug: "technical-analysis-basics-charts-trends-hindi";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".mdx"] };
+"thematic-investing-bharat-ke-future-trends-mein-nivesh.mdx": {
+	id: "thematic-investing-bharat-ke-future-trends-mein-nivesh.mdx";
+  slug: "thematic-investing-bharat-ke-future-trends-mein-nivesh";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
