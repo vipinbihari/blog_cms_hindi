@@ -270,6 +270,27 @@ export const BLOG_CONFIG: BlogConfig = {
     },
   },
 
+  // PWA Configuration
+  pwa: {
+    enabled: true, // Set to false to disable PWA features
+    // Reuse existing site configuration
+    name: `${siteName} - Investment Education`, // Full app name from site config
+    shortName: siteName, // Short name from site name
+    description: 'Expert analysis and practical lessons on Indian and global stock markets. Install for quick access to the latest insights.', // Extend existing description
+    // Dynamically use theme colors (will be resolved in manifest generation)
+    themeColor: undefined, // Will use theme.colors.primary[600] 
+    backgroundColor: undefined, // Will use theme.colors.primary[50]
+    display: 'minimal-ui' as const, // How the app appears when launched
+    orientation: 'any' as const, // Screen orientation
+    scope: '/', // App scope
+    startUrl: '/', // Start URL when app is launched
+    categories: ['finance', 'education', 'business', 'investment'], // App store categories for this niche
+    // Generate icons from existing branding
+    icons: 'auto' as const, // Will auto-generate from branding.logo and branding.favicon
+    // Generate shortcuts from existing navigation
+    shortcuts: 'auto' as const // Will auto-generate from navigation.header.links
+  },
+  
   // संपर्क पेज
   contactPage: {
     title: 'संपर्क करें',
@@ -299,4 +320,10 @@ export const getCurrentConfig = () => BLOG_CONFIG;
 export const getThemeColors = () => ({
   primary: BLOG_CONFIG.theme.colors.primary,
   secondary: BLOG_CONFIG.theme.colors.secondary,
+});
+
+// Helper function to get PWA theme colors
+export const getPWAThemeColors = () => ({
+  themeColor: BLOG_CONFIG.theme.colors.primary[600] || '#3B82F6', // Primary color for PWA theme
+  backgroundColor: BLOG_CONFIG.theme.colors.primary[50] || '#F8FAFC', // Light background for PWA
 });
