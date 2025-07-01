@@ -1,0 +1,101 @@
+---
+/**
+ * PWA Head Component
+ * ------------------
+ * PURPOSE
+ *   Adds PWA-related meta tags, manifest link, and service worker registration
+ *   Configurable based on blog configuration settings
+ * 
+ * USAGE
+ *   <PWAHead />
+ *   Add to your base layout's <head> section
+ */
+
+import { BLOG_CONFIG } from '../../config/current-config';
+import { isPWAEnabled } from '../../lib/pwa/manifest';
+
+// Check if PWA is enabled
+const pwaEnabled = isPWAEnabled(BLOG_CONFIG);
+const pwa = BLOG_CONFIG.pwa;
+
+// Extract theme colors - use primary[600] for theme color to match manifest generation
+const themeColor = pwa?.themeColor || BLOG_CONFIG.theme.colors.primary[600] || '#3B82F6';
+const backgroundColor = pwa?.backgroundColor || BLOG_CONFIG.theme.colors.primary[50] || '#F8FAFC';
+---
+
+{pwaEnabled && (
+  <>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content={themeColor} />
+    <meta name="background-color" content={backgroundColor} />
+    
+    <!-- Apple Touch Icon (for iOS) -->
+    <link rel="apple-touch-icon" href={BLOG_CONFIG.branding.appleTouchIcon || BLOG_CONFIG.branding.favicon} />
+    
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content={pwa?.shortName || BLOG_CONFIG.site.name} />
+    
+    <!-- Microsoft PWA Meta Tags -->
+    <meta name="msapplication-TileColor" content={themeColor} />
+    <meta name="msapplication-TileImage" content={BLOG_CONFIG.branding.appleTouchIcon || BLOG_CONFIG.branding.favicon} />
+    <meta name="msapplication-navbutton-color" content={themeColor} />
+    
+    <!-- Android Chrome PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content={pwa?.shortName || BLOG_CONFIG.site.name} />
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', async () => {
+          try {
+            const registration = await navigator.serviceWorker.register('/sw.js', {
+              scope: '/'
+            });
+            
+            console.log('[PWA] Service Worker registered successfully:', registration.scope);
+            
+            // Handle updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('[PWA] New content available, please refresh');
+                  }
+                });
+              }
+            });
+            
+          } catch (error) {
+            console.error('[PWA] Service Worker registration failed:', error);
+          }
+        });
+      }
+    </script>
+    
+    <!-- Install prompt handling is now managed by InstallPrompt component -->
+  </>
+)}
+
+<!-- PWA Debug Info (Development Only) -->
+{import.meta.env.DEV && pwaEnabled && (
+  <script is:inline define:vars={{ 
+    siteName: BLOG_CONFIG.site.name, 
+    siteUrl: BLOG_CONFIG.site.url, 
+    debugThemeColor: themeColor 
+  }}>
+    console.log('[PWA] PWA features enabled for:', {
+      site: siteName,
+      url: siteUrl,
+      theme: debugThemeColor,
+      manifest: '/manifest.json',
+      serviceWorker: '/sw.js'
+    });
+  </script>
+)}

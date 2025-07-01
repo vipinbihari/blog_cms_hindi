@@ -1,0 +1,211 @@
+---
+/**
+ * PWA Install Prompt Component
+ * ---------------------------
+ * PURPOSE
+ *   Shows a bottom popup banner on mobile devices to promote PWA installation
+ *   Only appears if PWA is not already installed and install prompt is available
+ * 
+ * USAGE
+ *   <InstallPrompt />
+ *   Add to your base layout after PWAHead component
+ */
+
+import { BLOG_CONFIG } from '../../config/current-config';
+import { isPWAEnabled } from '../../lib/pwa/manifest';
+
+// Check if PWA is enabled
+const pwaEnabled = isPWAEnabled(BLOG_CONFIG);
+const pwa = BLOG_CONFIG.pwa;
+const siteName = BLOG_CONFIG.site.name;
+const brandLogo = BLOG_CONFIG.branding.logo?.light || BLOG_CONFIG.branding.favicon;
+---
+
+{pwaEnabled && (
+  <div 
+    id="pwa-install-banner" 
+    class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg z-50 transform translate-y-full transition-transform duration-300 ease-in-out"
+    style="display: none;"
+  >
+    <div class="px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 border border-gray-200 dark:border-gray-600">
+          <img 
+            src={brandLogo} 
+            alt="{siteName} Logo"
+            class="w-8 h-8 object-contain"
+            loading="eager"
+          />
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900 dark:text-white">
+            Install {siteName}
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Add to your home screen for quick access
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button 
+          id="pwa-install-btn" 
+          class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors duration-200"
+        >
+          Install
+        </button>
+        <button 
+          id="pwa-install-close" 
+          class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function() {
+      let deferredPrompt = null;
+      const installBanner = document.getElementById('pwa-install-banner');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const closeBtn = document.getElementById('pwa-install-close');
+
+      // Check if PWA is already installed
+      function isPWAInstalled() {
+        return window.matchMedia('(display-mode: standalone)').matches ||
+               window.navigator.standalone === true ||
+               document.referrer.includes('android-app://');
+      }
+
+      // Show install banner
+      function showInstallBanner() {
+        if (installBanner && !isPWAInstalled()) {
+          installBanner.style.display = 'block';
+          // Small delay for smooth animation
+          setTimeout(() => {
+            installBanner.classList.remove('translate-y-full');
+          }, 100);
+        }
+      }
+
+      // Hide install banner
+      function hideInstallBanner() {
+        if (installBanner) {
+          installBanner.classList.add('translate-y-full');
+          setTimeout(() => {
+            installBanner.style.display = 'none';
+          }, 300);
+        }
+      }
+
+      // Handle beforeinstallprompt event
+      window.addEventListener('beforeinstallprompt', (event) => {
+        console.log('[PWA] Install prompt available');
+        event.preventDefault();
+        deferredPrompt = event;
+        
+        // Show custom install banner after a short delay
+        setTimeout(showInstallBanner, 2000);
+      });
+
+      // Handle install button click
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            try {
+              deferredPrompt.prompt();
+              const result = await deferredPrompt.userChoice;
+              console.log('[PWA] Install prompt result:', result.outcome);
+              
+              if (result.outcome === 'accepted') {
+                console.log('[PWA] User accepted install prompt');
+              }
+              
+              deferredPrompt = null;
+              hideInstallBanner();
+            } catch (error) {
+              console.error('[PWA] Install prompt error:', error);
+            }
+          }
+        });
+      }
+
+      // Handle close button click
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          hideInstallBanner();
+          // Store dismissal to avoid showing again for a while
+          localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+        });
+      }
+
+      // Handle app installed event
+      window.addEventListener('appinstalled', () => {
+        console.log('[PWA] App successfully installed');
+        hideInstallBanner();
+        deferredPrompt = null;
+      });
+
+      // Check if banner was recently dismissed
+      const dismissedTime = localStorage.getItem('pwa-install-dismissed');
+      if (dismissedTime) {
+        const daysSinceDismissed = (Date.now() - parseInt(dismissedTime)) / (1000 * 60 * 60 * 24);
+        if (daysSinceDismissed < 7) {
+          // Don't show banner if dismissed within last 7 days
+          return;
+        }
+      }
+
+      // Show banner if install prompt is available and PWA not installed
+      if (deferredPrompt && !isPWAInstalled()) {
+        setTimeout(showInstallBanner, 2000);
+      }
+    })();
+  </script>
+)}
+
+<style>
+  /* Ensure banner is above other content */
+  #pwa-install-banner {
+    z-index: 9999;
+  }
+
+  /* Smooth animations */
+  #pwa-install-banner {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Mobile-first responsive design */
+  @media (min-width: 768px) {
+    #pwa-install-banner {
+      max-width: 400px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(100%);
+      border-radius: 12px 12px 0 0;
+      margin-bottom: 0;
+    }
+    
+    #pwa-install-banner:not(.translate-y-full) {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  /* Tablet and desktop - show as bottom-right notification */
+  @media (min-width: 1024px) {
+    #pwa-install-banner {
+      max-width: 350px;
+      left: auto;
+      right: 20px;
+      bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    #pwa-install-banner:not(.translate-y-full) {
+      transform: translateY(0);
+    }
+  }
+</style>

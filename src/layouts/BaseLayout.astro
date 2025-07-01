@@ -2,6 +2,8 @@
 import { SEO } from 'astro-seo';
 import ConfigurableHeader from '../components/layout/ConfigurableHeader.astro';
 import ConfigurableFooter from '../components/layout/ConfigurableFooter.astro';
+import PWAHead from '../components/seo/PWAHead.astro';
+import InstallPrompt from '../components/pwa/InstallPrompt.astro';
 import '../styles/global.css';
 import { BLOG_CONFIG } from '../config/current-config';
 import type { BaseLayoutProps } from '../types/content';
@@ -73,6 +75,9 @@ const initialBlogTheme = BLOG_CONFIG.theme?.darkMode ? 'dark' : 'light';
         creator: BLOG_CONFIG.seo.twitterHandle,
       }}
     />
+    
+    <!-- PWA Support -->
+    <PWAHead />
   </head>
   <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
     <ConfigurableHeader />
@@ -82,6 +87,9 @@ const initialBlogTheme = BLOG_CONFIG.theme?.darkMode ? 'dark' : 'light';
     </main>
     
     <ConfigurableFooter />
+    
+    <!-- PWA Install Prompt -->
+    <InstallPrompt />
     
     <script>
       // Theme toggle functionality

@@ -270,7 +270,7 @@ export const BLOG_CONFIG: BlogConfig = {
     },
   },
 
-  // PWA Configuration
+   // PWA Configuration
   pwa: {
     enabled: true, // Set to false to disable PWA features
     // Reuse existing site configuration
@@ -280,7 +280,7 @@ export const BLOG_CONFIG: BlogConfig = {
     // Dynamically use theme colors (will be resolved in manifest generation)
     themeColor: undefined, // Will use theme.colors.primary[600] 
     backgroundColor: undefined, // Will use theme.colors.primary[50]
-    display: 'minimal-ui' as const, // How the app appears when launched
+    display: 'standalone' as const, // How the app appears when launched - standalone hides browser UI
     orientation: 'any' as const, // Screen orientation
     scope: '/', // App scope
     startUrl: '/', // Start URL when app is launched
@@ -290,7 +290,7 @@ export const BLOG_CONFIG: BlogConfig = {
     // Generate shortcuts from existing navigation
     shortcuts: 'auto' as const // Will auto-generate from navigation.header.links
   },
-  
+
   // संपर्क पेज
   contactPage: {
     title: 'संपर्क करें',

@@ -1,0 +1,1 @@
+rsync -av --exclude=".git" --exclude=".github" --exclude="scripts" --exclude="config" --exclude="node_modules" --exclude="dist" --exclude="optimized" --exclude="uploads" --exclude="content/posts/" ../blog_cms/ ../nivesh_marg/

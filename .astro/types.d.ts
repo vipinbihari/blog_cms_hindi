@@ -185,289 +185,261 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
-"4-big-stock-market-mistakes-hindi.mdx": {
-	id: "4-big-stock-market-mistakes-hindi.mdx";
-  slug: "4-big-stock-market-mistakes-hindi";
+"a-beginners-guide-to-understanding-the-indian-stock-market.mdx": {
+	id: "a-beginners-guide-to-understanding-the-indian-stock-market.mdx";
+  slug: "a-beginners-guide-to-understanding-the-indian-stock-market";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"algo-and-high-frequency-trading-india.mdx": {
-	id: "algo-and-high-frequency-trading-india.mdx";
-  slug: "algo-and-high-frequency-trading-india";
+"dalal-street-defiance-nifty-soars-past-24900.mdx": {
+	id: "dalal-street-defiance-nifty-soars-past-24900.mdx";
+  slug: "dalal-street-defiance-nifty-soars-past-24900";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx": {
-	id: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide.mdx";
-  slug: "algo-trading-kya-hai-bharat-me-kaise-shuru-kare-2025-guide";
+"dalal-street-ends-week-lower-sensex-slips-182-points-nifty-below-24800-gdp-jitters-global-cues-may-30-2025.mdx": {
+	id: "dalal-street-ends-week-lower-sensex-slips-182-points-nifty-below-24800-gdp-jitters-global-cues-may-30-2025.mdx";
+  slug: "dalal-street-ends-week-lower-sensex-slips-182-points-nifty-below-24800-gdp-jitters-global-cues-may-30-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"bazaar-ka-u-turn-sensex-ceasefire-news.mdx": {
-	id: "bazaar-ka-u-turn-sensex-ceasefire-news.mdx";
-  slug: "bazaar-ka-u-turn-sensex-ceasefire-news";
+"dalal-street-rallies-ahead-rbi-policy-sensex-nifty-gain-june-5-2025.mdx": {
+	id: "dalal-street-rallies-ahead-rbi-policy-sensex-nifty-gain-june-5-2025.mdx";
+  slug: "dalal-street-rallies-ahead-rbi-policy-sensex-nifty-gain-june-5-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"bazar-me-uchhal-defence-stocks-dhadham.mdx": {
-	id: "bazar-me-uchhal-defence-stocks-dhadham.mdx";
-  slug: "bazar-me-uchhal-defence-stocks-dhadham";
+"dalal-street-rebound-sensex-nifty-june-4-2025.mdx": {
+	id: "dalal-street-rebound-sensex-nifty-june-4-2025.mdx";
+  slug: "dalal-street-rebound-sensex-nifty-june-4-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"bull-and-bear-market-cycles-india.mdx": {
-	id: "bull-and-bear-market-cycles-india.mdx";
-  slug: "bull-and-bear-market-cycles-india";
+"dalal-street-roars-sensex-nifty-surge-global-relief-oil-plunge.mdx": {
+	id: "dalal-street-roars-sensex-nifty-surge-global-relief-oil-plunge.mdx";
+  slug: "dalal-street-roars-sensex-nifty-surge-global-relief-oil-plunge";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"corporate-actions-explained-dividend-stock-split-bonus-guide-hindi.mdx": {
-	id: "corporate-actions-explained-dividend-stock-split-bonus-guide-hindi.mdx";
-  slug: "corporate-actions-explained-dividend-stock-split-bonus-guide-hindi";
+"dalal-street-seesaws-sensex-nifty-tumble-june-3-2025.mdx": {
+	id: "dalal-street-seesaws-sensex-nifty-tumble-june-3-2025.mdx";
+  slug: "dalal-street-seesaws-sensex-nifty-tumble-june-3-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"esg-investing-kya-hai-india-guide.mdx": {
-	id: "esg-investing-kya-hai-india-guide.mdx";
-  slug: "esg-investing-kya-hai-india-guide";
+"dalal-street-tumbles-sensex-nifty-snap-rally-may-27-2025.mdx": {
+	id: "dalal-street-tumbles-sensex-nifty-snap-rally-may-27-2025.mdx";
+  slug: "dalal-street-tumbles-sensex-nifty-snap-rally-may-27-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"financial-statements-kaise-padhen-beginners-guide-hindi.mdx": {
-	id: "financial-statements-kaise-padhen-beginners-guide-hindi.mdx";
-  slug: "financial-statements-kaise-padhen-beginners-guide-hindi";
+"day-6-industry-economic-analysis-investing.mdx": {
+	id: "day-6-industry-economic-analysis-investing.mdx";
+  slug: "day-6-industry-economic-analysis-investing";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"fundamental-analysis-kya-hai-day-3.mdx": {
-	id: "fundamental-analysis-kya-hai-day-3.mdx";
-  slug: "fundamental-analysis-kya-hai-day-3";
+"day-7-technical-analysis-part-1-chart-types-trend-basics.mdx": {
+	id: "day-7-technical-analysis-part-1-chart-types-trend-basics.mdx";
+  slug: "day-7-technical-analysis-part-1-chart-types-trend-basics";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"fundamental-analysis-kya-hai-stock-value-guide.mdx": {
-	id: "fundamental-analysis-kya-hai-stock-value-guide.mdx";
-  slug: "fundamental-analysis-kya-hai-stock-value-guide";
+"day-9-technical-chart-patterns.mdx": {
+	id: "day-9-technical-chart-patterns.mdx";
+  slug: "day-9-technical-chart-patterns";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"global-investing-indian-investors-foreign-stocks.mdx": {
-	id: "global-investing-indian-investors-foreign-stocks.mdx";
-  slug: "global-investing-indian-investors-foreign-stocks";
+"decoding-the-rally-sensex-surge-nifty-conquers-25k.mdx": {
+	id: "decoding-the-rally-sensex-surge-nifty-conquers-25k.mdx";
+  slug: "decoding-the-rally-sensex-surge-nifty-conquers-25k";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"indias-3-biggest-stock-market-scams-lessons-learned.mdx": {
-	id: "indias-3-biggest-stock-market-scams-lessons-learned.mdx";
-  slug: "indias-3-biggest-stock-market-scams-lessons-learned";
+"derivatives-explained-beginners-guide-futures-options.mdx": {
+	id: "derivatives-explained-beginners-guide-futures-options.mdx";
+  slug: "derivatives-explained-beginners-guide-futures-options";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx": {
-	id: "ipo-se-listing-tak-company-ke-public-hone-ka-safar.mdx";
-  slug: "ipo-se-listing-tak-company-ke-public-hone-ka-safar";
+"fundamental-analysis-financial-statements-day-4.mdx": {
+	id: "fundamental-analysis-financial-statements-day-4.mdx";
+  slug: "fundamental-analysis-financial-statements-day-4";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"iran-america-tanav-sensex-tuta-niveshak-kya-kare.mdx": {
-	id: "iran-america-tanav-sensex-tuta-niveshak-kya-kare.mdx";
-  slug: "iran-america-tanav-sensex-tuta-niveshak-kya-kare";
+"fundamental-analysis-ratios-valuations-day-5.mdx": {
+	id: "fundamental-analysis-ratios-valuations-day-5.mdx";
+  slug: "fundamental-analysis-ratios-valuations-day-5";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"macro-factors-economy-policies-drive-investments-hindi.mdx": {
-	id: "macro-factors-economy-policies-drive-investments-hindi.mdx";
-  slug: "macro-factors-economy-policies-drive-investments-hindi";
+"geopolitical-shockwave-sensex-nifty-tumble-us-iran.mdx": {
+	id: "geopolitical-shockwave-sensex-nifty-tumble-us-iran.mdx";
+  slug: "geopolitical-shockwave-sensex-nifty-tumble-us-iran";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx": {
-	id: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke.mdx";
-  slug: "mutual-fund-aur-etf-share-bazar-mein-nivesh-ke-smart-tareeke";
+"geopolitical-whiplash-sensex-swings-wildly-on-ceasefire-news.mdx": {
+	id: "geopolitical-whiplash-sensex-swings-wildly-on-ceasefire-news.mdx";
+  slug: "geopolitical-whiplash-sensex-swings-wildly-on-ceasefire-news";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"passive-investing-index-funds-vs-etfs-india.mdx": {
-	id: "passive-investing-index-funds-vs-etfs-india.mdx";
-  slug: "passive-investing-index-funds-vs-etfs-india";
+"how-to-analyze-a-stock-before-investing-indian-market.mdx": {
+	id: "how-to-analyze-a-stock-before-investing-indian-market.mdx";
+  slug: "how-to-analyze-a-stock-before-investing-indian-market";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"psychology-of-investing-behavioral-biases-in-stock-market.mdx": {
-	id: "psychology-of-investing-behavioral-biases-in-stock-market.mdx";
-  slug: "psychology-of-investing-behavioral-biases-in-stock-market";
+"how-trading-works-indian-stock-market-day-3.mdx": {
+	id: "how-trading-works-indian-stock-market-day-3.mdx";
+  slug: "how-trading-works-indian-stock-market-day-3";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazaar-record-breaking-rally-sensex-crosses-84000.mdx": {
-	id: "share-bazaar-record-breaking-rally-sensex-crosses-84000.mdx";
-  slug: "share-bazaar-record-breaking-rally-sensex-crosses-84000";
+"indian-markets-rebound-us-tariff-ruling-may-29-2025.mdx": {
+	id: "indian-markets-rebound-us-tariff-ruling-may-29-2025.mdx";
+  slug: "indian-markets-rebound-us-tariff-ruling-may-29-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-guide-day-2-demat-se-pehli-trade.mdx": {
-	id: "share-bazar-guide-day-2-demat-se-pehli-trade.mdx";
-  slug: "share-bazar-guide-day-2-demat-se-pehli-trade";
+"indian-stock-market-structure-participants-day-2.mdx": {
+	id: "indian-stock-market-structure-participants-day-2.mdx";
+  slug: "indian-stock-market-structure-participants-day-2";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-kaise-kaam-karta-hai-hindi.mdx": {
-	id: "share-bazar-kaise-kaam-karta-hai-hindi.mdx";
-  slug: "share-bazar-kaise-kaam-karta-hai-hindi";
+"itc-bat-stake-sale-market-impact-may-28-2025.mdx": {
+	id: "itc-bat-stake-sale-market-impact-may-28-2025.mdx";
+  slug: "itc-bat-stake-sale-market-impact-may-28-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen.mdx": {
-	id: "share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen.mdx";
-  slug: "share-bazar-ke-zaruri-shabd-bull-bear-blue-chip-ko-samjhen";
+"market-meltdown-sensex-nifty-june-12-2025.mdx": {
+	id: "market-meltdown-sensex-nifty-june-12-2025.mdx";
+  slug: "market-meltdown-sensex-nifty-june-12-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-ki-abcd-day-1-basics.mdx": {
-	id: "share-bazar-ki-abcd-day-1-basics.mdx";
-  slug: "share-bazar-ki-abcd-day-1-basics";
+"metal-stocks-trump-tariff-threat-june-2-2025.mdx": {
+	id: "metal-stocks-trump-tariff-threat-june-2-2025.mdx";
+  slug: "metal-stocks-trump-tariff-threat-june-2-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide.mdx": {
-	id: "share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide.mdx";
-  slug: "share-bazar-me-nivesh-kaise-shuru-karein-beginners-guide";
+"nifty-crosses-25000-sensex-soars-market-rallies-on-positive-cues.mdx": {
+	id: "nifty-crosses-25000-sensex-soars-market-rallies-on-positive-cues.mdx";
+  slug: "nifty-crosses-25000-sensex-soars-market-rallies-on-positive-cues";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx": {
-	id: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par.mdx";
-  slug: "share-bazar-me-shandar-wapsi-sensex-1000-nifty-25100-par";
+"nifty-sensex-rally-june-9-2025-rbi-global-cues.mdx": {
+	id: "nifty-sensex-rally-june-9-2025-rbi-global-cues.mdx";
+  slug: "nifty-sensex-rally-june-9-2025-rbi-global-cues";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai.mdx": {
-	id: "share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai.mdx";
-  slug: "share-market-101-stocks-kya-hain-aur-kaise-kaam-karta-hai";
+"options-strategies-guide-indian-investors.mdx": {
+	id: "options-strategies-guide-indian-investors.mdx";
+  slug: "options-strategies-guide-indian-investors";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"share-market-ke-3-maharathi-retail-dii-fii-investors.mdx": {
-	id: "share-market-ke-3-maharathi-retail-dii-fii-investors.mdx";
-  slug: "share-market-ke-3-maharathi-retail-dii-fii-investors";
+"rbi-surprise-rate-cut-fuels-market-rally-june-7-2025.mdx": {
+	id: "rbi-surprise-rate-cut-fuels-market-rally-june-7-2025.mdx";
+  slug: "rbi-surprise-rate-cut-fuels-market-rally-june-7-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stock-market-index-kya-hota-hai.mdx": {
-	id: "stock-market-index-kya-hota-hai.mdx";
-  slug: "stock-market-index-kya-hota-hai";
+"sebi-approves-fno-expiry-swap-nse-tuesday-bse-thursday.mdx": {
+	id: "sebi-approves-fno-expiry-swap-nse-tuesday-bse-thursday.mdx";
+  slug: "sebi-approves-fno-expiry-swap-nse-tuesday-bse-thursday";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stock-market-mein-risk-management-apni-capital-kaise-bachayein.mdx": {
-	id: "stock-market-mein-risk-management-apni-capital-kaise-bachayein.mdx";
-  slug: "stock-market-mein-risk-management-apni-capital-kaise-bachayein";
+"sebis-t0-settlement-what-it-means-for-indian-investors.mdx": {
+	id: "sebis-t0-settlement-what-it-means-for-indian-investors.mdx";
+  slug: "sebis-t0-settlement-what-it-means-for-indian-investors";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stock-market-tax-rules-india-fy-2024-25.mdx": {
-	id: "stock-market-tax-rules-india-fy-2024-25.mdx";
-  slug: "stock-market-tax-rules-india-fy-2024-25";
+"sensex-nifty-flat-volatile-trade-june-10-2025.mdx": {
+	id: "sensex-nifty-flat-volatile-trade-june-10-2025.mdx";
+  slug: "sensex-nifty-flat-volatile-trade-june-10-2025";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies.mdx": {
-	id: "stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies.mdx";
-  slug: "stock-portfolio-kaise-banaye-diversification-asset-allocation-strategies";
+"siemens-energy-dalal-street-debut-volatile-start-power-titan.mdx": {
+	id: "siemens-energy-dalal-street-debut-volatile-start-power-titan.mdx";
+  slug: "siemens-energy-dalal-street-debut-volatile-start-power-titan";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stock-trading-hidden-charges-india.mdx": {
-	id: "stock-trading-hidden-charges-india.mdx";
-  slug: "stock-trading-hidden-charges-india";
+"stock-market-101-investing-journey-day-1.mdx": {
+	id: "stock-market-101-investing-journey-day-1.mdx";
+  slug: "stock-market-101-investing-journey-day-1";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"stocks-kitne-prakar-ke-hote-hain.mdx": {
-	id: "stocks-kitne-prakar-ke-hote-hain.mdx";
-  slug: "stocks-kitne-prakar-ke-hote-hain";
+"stock-market-basics-day-10-risk-portfolio-management.mdx": {
+	id: "stock-market-basics-day-10-risk-portfolio-management.mdx";
+  slug: "stock-market-basics-day-10-risk-portfolio-management";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"technical-analysis-basics-charts-trends-hindi.mdx": {
-	id: "technical-analysis-basics-charts-trends-hindi.mdx";
-  slug: "technical-analysis-basics-charts-trends-hindi";
+"what-is-pe-ratio-a-beginners-guide-to-valuing-stocks.mdx": {
+	id: "what-is-pe-ratio-a-beginners-guide-to-valuing-stocks.mdx";
+  slug: "what-is-pe-ratio-a-beginners-guide-to-valuing-stocks";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"thematic-investing-bharat-ke-future-trends-mein-nivesh.mdx": {
-	id: "thematic-investing-bharat-ke-future-trends-mein-nivesh.mdx";
-  slug: "thematic-investing-bharat-ke-future-trends-mein-nivesh";
+"what-is-short-selling-a-complete-guide-for-indian-investors.mdx": {
+	id: "what-is-short-selling-a-complete-guide-for-indian-investors.mdx";
+  slug: "what-is-short-selling-a-complete-guide-for-indian-investors";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare.mdx": {
-	id: "tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare.mdx";
-  slug: "tradetron-kya-hai-bina-coding-ke-algo-trading-kaise-kare";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"trading-vs-investing-kya-hai-behtar-guide.mdx": {
-	id: "trading-vs-investing-kya-hai-behtar-guide.mdx";
-  slug: "trading-vs-investing-kya-hai-behtar-guide";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"upstox-kya-hai-2024-guide.mdx": {
-	id: "upstox-kya-hai-2024-guide.mdx";
-  slug: "upstox-kya-hai-2024-guide";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"what-is-fno-futures-and-options-explained-hindi.mdx": {
-	id: "what-is-fno-futures-and-options-explained-hindi.mdx";
-  slug: "what-is-fno-futures-and-options-explained-hindi";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
-"zerodha-review-2025-hindi.mdx": {
-	id: "zerodha-review-2025-hindi.mdx";
-  slug: "zerodha-review-2025-hindi";
+"zee-promoters-inject-2237-crore-boost-stake-post-sony-fallout.mdx": {
+	id: "zee-promoters-inject-2237-crore-boost-stake-post-sony-fallout.mdx";
+  slug: "zee-promoters-inject-2237-crore-boost-stake-post-sony-fallout";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

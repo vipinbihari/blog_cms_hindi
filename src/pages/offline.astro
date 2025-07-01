@@ -1,0 +1,140 @@
+---
+/**
+ * Offline Page
+ * ------------
+ * PURPOSE
+ *   Fallback page shown when users are offline and try to navigate
+ *   Part of PWA functionality for better user experience
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BLOG_CONFIG } from '../config/current-config';
+
+const title = 'You are offline';
+const description = 'This page is available offline. Check your internet connection to access the full site.';
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="container mx-auto px-4 py-16">
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- Offline Icon -->
+      <div class="mb-8">
+        <svg 
+          class="w-24 h-24 mx-auto text-gray-400 dark:text-gray-600" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M18.364 5.636l-12.728 12.728m0 0L12 12m-6.364 6.364L12 12m6.364-6.364L12 12"
+          ></path>
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"
+          ></path>
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        You're Offline
+      </h1>
+
+      <!-- Description -->
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        It looks like you've lost your internet connection. Don't worry, you can still browse some content that's been cached on your device.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+        <button 
+          onclick="window.location.reload()" 
+          class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200"
+        >
+          Try Again
+        </button>
+        
+        <a 
+          href="/" 
+          class="w-full sm:w-auto block bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200 text-center"
+        >
+          Go to Homepage
+        </a>
+      </div>
+
+      <!-- Cached Content Info -->
+      <div class="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Available Offline
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Some content from {BLOG_CONFIG.site.name} may still be available offline:
+        </p>
+        
+        <ul class="text-left text-gray-600 dark:text-gray-300 space-y-2">
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Previously visited blog posts
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Homepage and navigation
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            Basic site functionality
+          </li>
+        </ul>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="mt-8">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Connection status: <span id="connection-status" class="font-medium">Checking...</span>
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // Connection status detection
+  function updateConnectionStatus() {
+    const statusElement = document.getElementById('connection-status');
+    if (statusElement) {
+      if (navigator.onLine) {
+        statusElement.textContent = 'Online';
+        statusElement.className = 'font-medium text-green-600 dark:text-green-400';
+      } else {
+        statusElement.textContent = 'Offline';
+        statusElement.className = 'font-medium text-red-600 dark:text-red-400';
+      }
+    }
+  }
+
+  // Update status on load and connection changes
+  document.addEventListener('DOMContentLoaded', updateConnectionStatus);
+  window.addEventListener('online', updateConnectionStatus);
+  window.addEventListener('offline', updateConnectionStatus);
+
+  // Auto-redirect when connection is restored
+  window.addEventListener('online', () => {
+    console.log('[PWA] Connection restored');
+    setTimeout(() => {
+      if (confirm('Your connection has been restored. Would you like to refresh the page?')) {
+        window.location.reload();
+      }
+    }, 1000);
+  });
+</script>
