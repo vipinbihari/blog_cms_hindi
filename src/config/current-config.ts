@@ -82,7 +82,7 @@ export const BLOG_CONFIG: BlogConfig = {
       ctaButton1: { text: 'लेख खोजें', url: '/posts/page/1' },
       ctaButton2: { text: 'हमारे बारे में', url: '/about' },
       heroBackgroundImage: {
-        src: '/images/blog/blog-home-image-neelam.png',
+        src: '/images/blog/blog-home-image-neelam-512.png',
         alt: 'हीरो बैकग्राउंड इमेज',
         width: 1280,
         height: 640,
