@@ -132,10 +132,11 @@ export const BLOG_CONFIG: BlogConfig = {
 
   // सोशल मीडिया
   social: [
-   // { platform: 'twitter', url: `https://twitter.com/gyanso`, label: 'ट्विटर पर फॉलो करें' },
+   { platform: 'twitter', url: `https://x.com/GyanSo_offical`, label: 'ट्विटर पर फॉलो करें' },
    // { platform: 'linkedin', url: `https://linkedin.com/company/gyanso`, label: 'लिंक्डइन पर जुड़ें' },
-   // { platform: 'facebook', url: `https://facebook.com/gyanso`, label: 'फेसबुक पर लाइक करें' },
+   { platform: 'facebook', url: `https://twitter.com/gyanso`, label: 'फेसबुक पर लाइक करें' },
     { platform: 'youtube', url: `https://youtube.com/@gyanso`, label: 'यूट्यूब पर सब्सक्राइब करें' },
+    { platform: 'instagram', url: `https://instagram.com/gyanso_official/`, label: 'इंस्टाग्राम पर फॉलो करें' },
   ],
 
   // SEO
