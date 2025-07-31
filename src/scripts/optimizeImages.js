@@ -199,9 +199,9 @@ async function optimizeImage(filePath, relativePath) {
     const image = sharp(filePath);
     const metadata = await image.metadata();
     
-    // Determine widths to generate (don't generate larger than original)
-    const widths = imageConfig.widths.filter(w => w <= metadata.width);
-    if (widths.length === 0) widths.push(metadata.width);
+    // Always generate all requested widths, but use original width if smaller
+    // This ensures expected filenames exist even for smaller images
+    const widths = imageConfig.widths;
     
     // Track optimized versions
     const optimizedVersions = [];
@@ -227,15 +227,20 @@ async function optimizeImage(filePath, relativePath) {
         const outputPath = path.join(targetDir, `${fileName}-${width}${outputExt}`);
         
         try {
+          // Use the smaller of requested width or original width for actual resizing
+          const actualWidth = Math.min(width, metadata.width);
+          
           const outputInfo = await image
-            .resize(width)
+            .resize(actualWidth)
             .toFormat(outputFormat, { quality: imageConfig.quality[outputFormat] || 80 })
             .toFile(outputPath);
           
           // Calculate compression ratio
           const compressionRatio = (originalSize / outputInfo.size).toFixed(2);
           
-          console.log(`Optimized: ${outputPath} (${outputInfo.size} bytes, ${compressionRatio}x smaller) [${outputFormat.toUpperCase()}]`);
+          // Log with actual vs requested width info
+          const widthInfo = actualWidth < width ? ` (actual: ${actualWidth}px)` : '';
+          console.log(`Optimized: ${outputPath} (${outputInfo.size} bytes, ${compressionRatio}x smaller) [${outputFormat.toUpperCase()}]${widthInfo}`);
           
           // Track this optimized version
           optimizedVersions.push({

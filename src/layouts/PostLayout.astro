@@ -188,6 +188,7 @@ const components = {
 
         // Cache to store already loaded high-res images
         const imageCache = new Map();
+        const failedImages = new Set(); // Track failed image URLs to prevent retries
         
         // Helper function to get the higher resolution version of an image
         function getHighResVersion(src) {
@@ -239,32 +240,72 @@ const components = {
               loader.style.display = 'block';
               modalImg.style.display = 'none';
               
-              // Setup loading handlers
-              modalImg.onload = () => {
+              // Setup loading handlers with proper error state tracking
+              let attemptCount = 0;
+              const maxAttempts = 3;
+              
+              function handleImageLoad() {
                 // Image loaded successfully - hide loader and cache the image
                 loader.style.display = 'none';
                 modalImg.style.display = 'block';
                 imageCache.set(highResSrc, true);
-              };
+                // Clear any error handlers to prevent memory leaks
+                modalImg.onload = null;
+                modalImg.onerror = null;
+              }
               
-              modalImg.onerror = () => {
-                // If WebP high-res fails, try the same format but high-res
-                const originalFormat = img.src.match(/\.([^.]+)$/)?.[1] || 'jpg';
-                const basePathForFallback = img.src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
-                const fallbackSrc = `${basePathForFallback}-${zoomResolution}.${originalFormat}`;
+              function handleImageError() {
+                attemptCount++;
                 
-                console.log('WebP load failed, trying fallback:', fallbackSrc);
-                modalImg.src = fallbackSrc;
+                // Mark current URL as failed to prevent future attempts
+                failedImages.add(modalImg.src);
                 
-                // Add another error handler for the fallback
-                modalImg.onerror = () => {
-                  // If both high-res versions fail, use original
+                if (attemptCount === 1) {
+                  // First failure: try fallback format (WebP → original format)
+                  const originalFormat = img.src.match(/\.([^.]+)$/)?.[1] || 'jpg';
+                  const basePathForFallback = img.src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
+                  const fallbackSrc = `${basePathForFallback}-${zoomResolution}.${originalFormat}`;
+                  
+                  // Check if we've already failed to load this fallback URL
+                  if (failedImages.has(fallbackSrc)) {
+                    console.log('Fallback URL already known to fail, skipping to original');
+                    attemptCount = 2; // Skip to final fallback
+                    handleImageError();
+                    return;
+                  }
+                  
+                  console.log('WebP load failed, trying fallback:', fallbackSrc);
+                  modalImg.src = fallbackSrc;
+                  
+                } else if (attemptCount === 2) {
+                  // Second failure: try original image
+                  if (failedImages.has(img.src)) {
+                    console.log('Original image also known to fail, showing error');
+                    attemptCount = maxAttempts; // Skip to error state
+                    handleImageError();
+                    return;
+                  }
+                  
                   console.log('Fallback also failed, using original image');
+                  modalImg.src = img.src;
+                  
+                } else {
+                  // All attempts failed - show error state
+                  console.error('All image loading attempts failed for:', highResSrc);
                   loader.style.display = 'none';
                   modalImg.style.display = 'block';
-                  modalImg.src = img.src;
-                };
-              };
+                  
+                  // Show a placeholder or error message
+                  modalImg.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY5NzM4MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+PC9zdmc+';
+                  
+                  // Clear handlers to prevent further attempts
+                  modalImg.onload = null;
+                  modalImg.onerror = null;
+                }
+              }
+              
+              modalImg.onload = handleImageLoad;
+              modalImg.onerror = handleImageError;
               
               // Set source to high-res version
               modalImg.src = highResSrc;

@@ -296,13 +296,13 @@ export const BLOG_CONFIG: BlogConfig = {
   // These values define the standard image widths used throughout the blog
   imageResolutions: {
     // Width for post card thumbnails (homepage, category listings, etc.)
-    card: 640,
+    card: 350,
     
     // Width for standard blog post content images
-    content: 960,
+    content: 750,
     
     // Width for zoomed/fullscreen images
-    zoom: 1280,
+    zoom: 1200,
     
     // Additional custom resolutions (optional)
     // Add extra breakpoints beyond the standard sizes if needed
@@ -314,7 +314,7 @@ export const BLOG_CONFIG: BlogConfig = {
     
     // Quality settings for each format (0-100)
     quality: {
-      webp: 80,
+      webp: 90,
       jpg: 80,
       jpeg: 80,
       png: 80
