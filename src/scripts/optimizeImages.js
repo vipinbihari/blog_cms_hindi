@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import sharp from 'sharp';
+import { BLOG_CONFIG } from '../config/current-config.ts';
 
 // Get the current directory path
 const __filename = fileURLToPath(import.meta.url);
@@ -15,16 +16,35 @@ const rootDir = path.resolve(__dirname, '../..');
 const uploadsDir = path.resolve(rootDir, 'public/images/uploads');
 const optimizedDir = path.resolve(rootDir, 'public/images/optimized');
 
-// Quality settings for different formats
-const QUALITY_SETTINGS = {
-  jpeg: 80,
-  jpg: 80,
-  png: 80,
-  webp: 75
+// Get configuration from central config
+const getImageConfig = () => {
+  const config = BLOG_CONFIG.imageResolutions;
+  
+  // Build width breakpoints from config
+  const widths = [config.card, config.content, config.zoom];
+  
+  // Add additional resolutions if specified
+  if (config.additional && config.additional.length > 0) {
+    widths.push(...config.additional);
+  }
+  
+  // Remove duplicates and sort
+  const uniqueWidths = [...new Set(widths)].sort((a, b) => a - b);
+  
+  // Get quality settings with defaults
+  const quality = {
+    webp: config.quality?.webp || 80,
+    jpg: config.quality?.jpg || 80,
+    jpeg: config.quality?.jpeg || 80,
+    png: config.quality?.png || 80
+  };
+  
+  return {
+    widths: uniqueWidths,
+    formats: config.formats,
+    quality
+  };
 };
-
-// Width breakpoints for responsive images
-const WIDTH_BREAKPOINTS = [320, 640, 960, 1280, 1920];
 
 // File to store timestamps for optimized images
 const timestampFile = path.resolve(rootDir, 'public/images/optimized/.timestamps.json');
@@ -106,31 +126,45 @@ function doesImageNeedProcessing(sourceFilePath, fileName, ext, targetDir) {
   try {
     const sourceStats = fs.statSync(sourceFilePath);
     const sourceTime = sourceStats.mtimeMs;
+    const sourceFormat = ext.replace('.', '');
     
-    // Check if at least one of the optimized versions exists
-    // We'll check the smallest size (320px) as it should always be generated
-    const optimizedPath = path.join(targetDir, `${fileName}-320${ext}`);
-    const webpPath = path.join(targetDir, `${fileName}-320.webp`);
+    // Get image configuration
+    const imageConfig = getImageConfig();
     
-    // If neither optimized version exists, we need to process the image
-    if (!fs.existsSync(optimizedPath) && !fs.existsSync(webpPath)) {
+    // Get the smallest width (card size) to check for existence
+    const checkWidth = Math.min(...imageConfig.widths);
+    
+    // Check if at least one optimized version exists for each configured format
+    let hasAnyOptimizedVersion = false;
+    
+    for (const format of imageConfig.formats) {
+      let outputFormat = format;
+      if (format === 'original') {
+        outputFormat = sourceFormat;
+      }
+      
+      // Skip unsupported formats
+      if (!['webp', 'jpg', 'jpeg', 'png'].includes(outputFormat)) {
+        continue;
+      }
+      
+      const outputExt = outputFormat === 'jpeg' ? '.jpg' : `.${outputFormat}`;
+      const optimizedPath = path.join(targetDir, `${fileName}-${checkWidth}${outputExt}`);
+      
+      if (fs.existsSync(optimizedPath)) {
+        hasAnyOptimizedVersion = true;
+        
+        // Check if source is newer than this optimized version
+        const optimizedStats = fs.statSync(optimizedPath);
+        if (sourceTime > optimizedStats.mtimeMs) {
+          return true; // Source is newer, need to reprocess
+        }
+      }
+    }
+    
+    // If no optimized versions exist, we need to process
+    if (!hasAnyOptimizedVersion) {
       return true;
-    }
-    
-    // If optimized version exists, check if source is newer
-    if (fs.existsSync(optimizedPath)) {
-      const optimizedStats = fs.statSync(optimizedPath);
-      if (sourceTime > optimizedStats.mtimeMs) {
-        return true; // Source is newer, need to reprocess
-      }
-    }
-    
-    // If WebP version exists, check if source is newer
-    if (fs.existsSync(webpPath)) {
-      const webpStats = fs.statSync(webpPath);
-      if (sourceTime > webpStats.mtimeMs) {
-        return true; // Source is newer, need to reprocess
-      }
     }
     
     // If we got here, optimized versions exist and are up to date
@@ -151,9 +185,12 @@ function doesImageNeedProcessing(sourceFilePath, fileName, ext, targetDir) {
 async function optimizeImage(filePath, relativePath) {
   try {
     const ext = path.extname(filePath).toLowerCase();
-    const imageType = ext.replace('.', '');
+    const sourceFormat = ext.replace('.', '');
     const fileName = path.basename(filePath, ext);
     const targetDir = path.join(optimizedDir, path.dirname(relativePath));
+    
+    // Get image configuration
+    const imageConfig = getImageConfig();
     
     // Create target directory
     ensureDirectoryExists(targetDir);
@@ -163,62 +200,56 @@ async function optimizeImage(filePath, relativePath) {
     const metadata = await image.metadata();
     
     // Determine widths to generate (don't generate larger than original)
-    const widths = WIDTH_BREAKPOINTS.filter(w => w <= metadata.width);
+    const widths = imageConfig.widths.filter(w => w <= metadata.width);
     if (widths.length === 0) widths.push(metadata.width);
     
     // Track optimized versions
     const optimizedVersions = [];
+    const originalSize = fs.statSync(filePath).size;
     
-    // Output original format
-    for (const width of widths) {
-      const outputPath = path.join(targetDir, `${fileName}-${width}${ext}`);
-      const outputInfo = await image
-        .resize(width)
-        .toFormat(imageType, { quality: QUALITY_SETTINGS[imageType] || 80 })
-        .toFile(outputPath);
+    // Generate images for each configured format
+    for (const format of imageConfig.formats) {
+      // Determine the actual format to use
+      let outputFormat = format;
+      if (format === 'original') {
+        outputFormat = sourceFormat;
+      }
       
-      // Calculate compression ratio
-      const originalSize = fs.statSync(filePath).size;
-      const compressionRatio = (originalSize / outputInfo.size).toFixed(2);
+      // Skip if format is not supported
+      if (!['webp', 'jpg', 'jpeg', 'png'].includes(outputFormat)) {
+        console.warn(`Skipping unsupported format: ${outputFormat}`);
+        continue;
+      }
       
-      console.log(`Optimized: ${outputPath} (${outputInfo.size} bytes, ${compressionRatio}x smaller)`);
-      
-      // Track this optimized version
-      optimizedVersions.push({
-        width,
-        format: imageType,
-        path: path.relative(rootDir, outputPath),
-        size: outputInfo.size,
-        compressionRatio: parseFloat(compressionRatio)
-      });
-    }
-    
-    // Also output WebP format for better compression
-    if (imageType !== 'webp') {
+      // Generate images at each width
       for (const width of widths) {
-        const outputPath = path.join(targetDir, `${fileName}-${width}.webp`);
-        const outputInfo = await image
-          .resize(width)
-          .toFormat('webp', { quality: QUALITY_SETTINGS.webp })
-          .toFile(outputPath);
+        const outputExt = outputFormat === 'jpeg' ? '.jpg' : `.${outputFormat}`;
+        const outputPath = path.join(targetDir, `${fileName}-${width}${outputExt}`);
         
-        // Calculate compression ratio
-        const originalSize = fs.statSync(filePath).size;
-        const compressionRatio = (originalSize / outputInfo.size).toFixed(2);
-        
-        console.log(`Optimized: ${outputPath} (${outputInfo.size} bytes, ${compressionRatio}x smaller) (WebP)`);
-        
-        // Track this optimized version
-        optimizedVersions.push({
-          width,
-          format: 'webp',
-          path: path.relative(rootDir, outputPath),
-          size: outputInfo.size,
-          compressionRatio: parseFloat(compressionRatio)
-        });
+        try {
+          const outputInfo = await image
+            .resize(width)
+            .toFormat(outputFormat, { quality: imageConfig.quality[outputFormat] || 80 })
+            .toFile(outputPath);
+          
+          // Calculate compression ratio
+          const compressionRatio = (originalSize / outputInfo.size).toFixed(2);
+          
+          console.log(`Optimized: ${outputPath} (${outputInfo.size} bytes, ${compressionRatio}x smaller) [${outputFormat.toUpperCase()}]`);
+          
+          // Track this optimized version
+          optimizedVersions.push({
+            width,
+            format: outputFormat,
+            path: path.relative(rootDir, outputPath),
+            size: outputInfo.size,
+            compressionRatio: parseFloat(compressionRatio)
+          });
+        } catch (formatError) {
+          console.error(`Error generating ${outputFormat} format for ${outputPath}:`, formatError.message);
+        }
       }
     }
-    
     
     return optimizedVersions;
   } catch (error) {

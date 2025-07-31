@@ -2,45 +2,65 @@
 
 ## Overview
 
-The blog CMS now supports Progressive Web App (PWA) functionality, allowing users to install your blog as an app on their devices. This guide explains how to configure PWA features for different blog niches.
+The blog CMS features a **comprehensive Progressive Web App (PWA) system** with fully dynamic, configuration-driven architecture. Users can install your blog as a native-feeling app with zero duplication in configuration.
 
-## Features Implemented
+## ✨ Latest Features (Updated 2025)
 
-✅ **Install Prompt**: Users can install the blog as an app on their device  
-✅ **Configurable Manifest**: Dynamic manifest.json generation from config  
-✅ **Service Worker**: Basic offline support and install prompt enablement  
-✅ **Homescreen Icons**: Customizable app icons and splash screens  
-✅ **Multi-Niche Support**: Easy configuration per blog niche  
-✅ **Theme Integration**: PWA colors match your blog theme  
+✅ **Smart Install Prompt**: Custom branded banner with your logo  
+✅ **Dynamic Configuration**: Auto-derives from existing site config (DRY principle)  
+✅ **High-Quality Graphics**: Uses ogImage for splash screens, logo for install prompt  
+✅ **Native App Experience**: Standalone mode removes browser UI  
+✅ **Auto-Generated Icons**: Creates multiple sizes from your branding  
+✅ **Auto-Generated Shortcuts**: Builds from your navigation structure  
+✅ **Theme Integration**: Perfect color matching with your theme presets  
+✅ **Multi-Niche Ready**: Adapts automatically to any blog configuration  
 
-## Configuration
+## 🚀 Smart Configuration (Zero Duplication)
 
-### Basic PWA Setup
+### The New Way: Dynamic Auto-Generation
 
-Add the following to your `src/config/current-config.ts`:
+The PWA system now **automatically derives everything** from your existing configuration:
 
 ```typescript
-// PWA Configuration
+// PWA Configuration - Ultra-minimal setup!
 pwa: {
-  enabled: true, // Set to false to disable PWA features
-  name: 'Your Blog Name', // Full app name
-  shortName: 'Short Name', // Short name for homescreen (max 12 chars)
-  description: 'Your blog description for the app store',
-  themeColor: '#yourPrimaryColor', // Primary theme color
-  backgroundColor: '#yourBackgroundColor', // Background color
-  display: 'minimal-ui' as const, // App display mode
-  orientation: 'any' as const, // Screen orientation
-  scope: '/', // App scope
-  startUrl: '/', // Start URL when app is launched
-  categories: ['category1', 'category2'], // App store categories
-  icons: [
-    // Your app icons (see icon section below)
-  ],
-  shortcuts: [
-    // App shortcuts (see shortcuts section below)
-  ]
+  enabled: true, // Enable/disable PWA features
+  
+  // Auto-derives from site.name + site.tagline
+  name: `${siteName} - Investment Education`,
+  shortName: siteName, // Uses site.name
+  
+  // Niche-specific (the only thing you customize)
+  description: 'Expert analysis and practical lessons on Indian and global stock markets. Install for quick access to the latest insights.',
+  categories: ['finance', 'education', 'business', 'investment'],
+  
+  // Everything else is AUTO-GENERATED! 🎉
+  themeColor: undefined, // ✅ AUTO: Uses theme.colors.primary[600]
+  backgroundColor: undefined, // ✅ AUTO: Uses theme.colors.primary[50]
+  display: 'standalone' as const, // ✅ Native app experience (no browser UI)
+  icons: 'auto' as const, // ✅ AUTO: Generated from branding config
+  shortcuts: 'auto' as const // ✅ AUTO: Generated from navigation
 }
 ```
+
+### 🔄 How Auto-Generation Works
+
+| PWA Element | Auto-Generated From | Example Result |
+|-------------|--------------------|-----------------|
+| **App Name** | `site.name + site.tagline` | "FinHux - Investment Education" |
+| **Theme Color** | `theme.colors.primary[600]` | `#16a34a` (Green theme) |
+| **Background** | `theme.colors.primary[50]` | `#f0fdf4` (Light green) |
+| **Icons** | `branding.ogImage` (512px) | High-quality splash screen |
+| **Install Logo** | `branding.logo.light` (128px) | Clean install prompt |
+| **Shortcuts** | `navigation.header.links` | Home, Categories, About, Contact |
+
+### 📱 What You Get Automatically
+
+- **5 Icon Sizes**: 64x64, 128x128, 192x192, 256x256, 384x384, 512x512
+- **2 Icon Purposes**: `any` (regular) + `maskable` (Android adaptive)
+- **4 App Shortcuts**: Auto-generated from your navigation menu
+- **Perfect Theme Matching**: Colors sync with your chosen theme preset
+- **Install Prompt**: Custom branded banner with your logo
 
 ### Niche-Specific Configurations
 

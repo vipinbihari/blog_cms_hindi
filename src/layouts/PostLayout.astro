@@ -8,8 +8,11 @@ import AuthorBio from '../components/features/AuthorBio.astro';
 import TableOfContents from '../components/features/TableOfContents';
 import ReadingProgress from '../components/features/ReadingProgress';
 import ResponsiveImage from '../components/ui/ResponsiveImage.astro';
+import Video from '../components/ui/Video.astro';
 import RelatedPosts from '../components/features/RelatedPosts.astro';
 import UpstoxCTA from '../components/features/UpstoxCTA.astro';
+import { BLOG_CONFIG } from '../config/current-config';
+
 
 type Props = {
   post: CollectionEntry<'posts'>;
@@ -31,9 +34,10 @@ const displayImage = heroImage || placeholderImageUrl;
 const ogPlaceholderImageUrl = `https://placehold.co/1200x630?text=${encodeURIComponent(title.replace(/\s+/g, '+'))}`;
 const ogImage = heroImage || ogPlaceholderImageUrl; // Use placeholder if heroImage is missing
 
-// MDX Component overrides to use ResponsiveImage for all images
+// MDX Component overrides to use ResponsiveImage for all images and Video component
 const components = {
   img: ResponsiveImage,
+  Video: Video,
 };
 
 ---
@@ -98,7 +102,7 @@ const components = {
       </div>
       
       <!-- Simple image zoom functionality with resolution switching -->
-      <script>
+      <script define:vars={{ zoomResolution: BLOG_CONFIG.imageResolutions.zoom }}>
         // Create modal elements for image zoom
         const modal = document.createElement('div');
         modal.className = 'image-modal';
@@ -187,8 +191,10 @@ const components = {
         
         // Helper function to get the higher resolution version of an image
         function getHighResVersion(src) {
+          // zoomResolution is now available from define:vars
+          
           // If already high-res or not an optimized image, return as is
-          if (src.includes('-960.') || !src.match(/-\d+\.(webp|jpg|jpeg|png|gif)$/)) {
+          if (src.includes(`-${zoomResolution}.`) || !src.match(/-\d+\.(webp|jpg|jpeg|png|gif)$/)) {
             return src;
           }
           
@@ -197,7 +203,7 @@ const components = {
           const basePath = src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
           
           // Always return the WebP version regardless of original format
-          return `${basePath}-960.webp`;
+          return `${basePath}-${zoomResolution}.webp`;
         }
 
         function setupImageZoom() {
@@ -205,7 +211,7 @@ const components = {
           const contentImages = document.querySelectorAll('.content img:not([data-zoom-processed]), .hero-img:not([data-zoom-processed])');
           
           contentImages.forEach(imgEl => {
-            const img = imgEl as HTMLImageElement;
+            const img = imgEl;
             img.setAttribute('data-zoom-processed', 'true');
             img.style.cursor = 'zoom-in';
             
@@ -245,7 +251,7 @@ const components = {
                 // If WebP high-res fails, try the same format but high-res
                 const originalFormat = img.src.match(/\.([^.]+)$/)?.[1] || 'jpg';
                 const basePathForFallback = img.src.replace(/-\d+\.(webp|jpg|jpeg|png|gif)$/, '');
-                const fallbackSrc = `${basePathForFallback}-960.${originalFormat}`;
+                const fallbackSrc = `${basePathForFallback}-${zoomResolution}.${originalFormat}`;
                 
                 console.log('WebP load failed, trying fallback:', fallbackSrc);
                 modalImg.src = fallbackSrc;

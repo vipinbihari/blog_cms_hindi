@@ -41,6 +41,55 @@ export interface HeroConfig {
   heroBackgroundImage?: string | HeroBackgroundImage;
 }
 
+/**
+ * Image Resolutions Configuration
+ * Defines standard image sizes used throughout the blog for consistency
+ */
+export interface ImageResolutionsConfig {
+  /**
+   * Width for post card thumbnails (e.g., on homepage, category listings)
+   * Default: 320px
+   */
+  card: number;
+  
+  /**
+   * Width for blog post content images
+   * Default: 640px 
+   */
+  content: number;
+  
+  /**
+   * Width for zoomed/fullscreen images
+   * Default: 960px
+   */
+  zoom: number;
+  
+  /**
+   * Additional custom resolutions (optional)
+   * Use this to add extra breakpoints beyond the standard card/content/zoom sizes
+   */
+  additional?: number[];
+  
+  /**
+   * Image formats to generate during optimization
+   * Default: ['webp', 'original'] - generates WebP versions plus keeps original format
+   * Options: 'webp', 'jpg', 'jpeg', 'png', 'original'
+   * 'original' means keep the same format as the source image
+   */
+  formats: ('webp' | 'jpg' | 'jpeg' | 'png' | 'original')[];
+  
+  /**
+   * Quality settings for each format (0-100)
+   * Default: 80 for all formats
+   */
+  quality?: {
+    webp?: number;
+    jpg?: number;
+    jpeg?: number;
+    png?: number;
+  };
+}
+
 export interface BlogConfig {
   // Site Identity
   site: {
@@ -123,6 +172,7 @@ export interface BlogConfig {
   // Component Configurations
   upstoxCTA?: UpstoxCTAConfig; // Configuration for the UpstoxCTA component
   authors?: Record<string, AuthorData>; // Configuration for author information
+  imageResolutions: ImageResolutionsConfig; // Configuration for standardized image resolutions
   
   // SEO & Advanced
   seo?: {
@@ -135,6 +185,9 @@ export interface BlogConfig {
   aboutPage?: AboutPageConfig; // Optional configuration for the About Us page
   contactPage?: ContactPageConfig; // Optional configuration for the Contact page
   legalPages: LegalPagesConfig; // Required configuration for legal pages
+  
+  // PWA Configuration
+  pwa?: PWAConfig; // Optional Progressive Web App configuration
 }
 
 interface ColorScale {
@@ -298,6 +351,42 @@ export interface UpstoxCTAConfig {
     buttonUrl: string;
     disclaimer?: string;
   };
+}
+
+// PWA Configuration
+export interface PWAConfig {
+  enabled: boolean;
+  name: string;
+  shortName: string;
+  description: string;
+  // Optional theme colors - if undefined, will use theme.colors.primary
+  themeColor?: string;
+  backgroundColor?: string;
+  display: 'minimal-ui' | 'standalone' | 'fullscreen' | 'browser';
+  orientation: 'any' | 'natural' | 'landscape' | 'portrait';
+  scope: string;
+  startUrl: string;
+  // Icons can be an array or 'auto' to generate from branding config
+  icons: {
+    src: string;
+    sizes: string;
+    type: string;
+    purpose?: 'any' | 'maskable' | 'monochrome';
+  }[] | 'auto';
+  categories?: string[];
+  // Shortcuts can be an array or 'auto' to generate from navigation config
+  shortcuts?: {
+    name: string;
+    url: string;
+    description?: string;
+    icon?: string;
+  }[] | 'auto';
+  screenshots?: {
+    src: string;
+    sizes: string;
+    type: string;
+    label?: string;
+  }[];
 }
 
 // Author Configuration

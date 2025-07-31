@@ -3,6 +3,8 @@
 A highly-configurable, multi-niche blog starter built with **Astro**, **TypeScript** and **Tailwind CSS**.  
 Use it to launch a technology, lifestyle, finance, food, travel – or completely custom – blog in minutes with **zero hard-coding**.
 
+🚀 **NEW**: Full **Progressive Web App (PWA)** support with native app installation, offline functionality, and dynamic configuration!
+
 ---
 
 ## 1  Prerequisites
@@ -91,6 +93,31 @@ Hot-reload means you will see changes instantly.
   - Automatic format selection uses WebP when supported
 - **Wide Coverage** - Works for both hero images and all in-post images automatically
 - **Homepage Post Cards** - Post card images use smaller 320px resolutions for faster loading
+
+## 5c  Progressive Web App (PWA) Features
+
+- **🎯 Dynamic Configuration**: PWA settings auto-derive from your existing site config (zero duplication)
+- **📱 Smart Install Prompt**: Custom branded banner with your logo that appears on mobile devices
+- **🎨 Perfect Theme Integration**: PWA colors automatically match your chosen theme preset
+- **✨ High-Quality Graphics**: Uses your high-resolution ogImage (512px) for splash screens
+- **📵 Native App Experience**: Standalone mode provides true native feel without browser UI
+- **🔄 Auto-Generated Assets**: Icons and shortcuts automatically generated from branding and navigation
+- **🌐 Offline Support**: Basic offline functionality with service worker caching
+- **⚙️ Multi-Niche Ready**: Adapts automatically to finance, tech, lifestyle, food, travel blogs
+
+### PWA Configuration
+```typescript
+// Ultra-minimal PWA setup in src/config/current-config.ts
+pwa: {
+  enabled: true,
+  description: 'Your niche-specific description',
+  categories: ['finance', 'education', 'business'], // Niche-specific
+  // Everything else auto-generated from existing config! 🎉
+  icons: 'auto', shortcuts: 'auto', themeColor: undefined
+}
+```
+
+**📚 Documentation**: See `PWA_CONFIGURATION_GUIDE.md` for complete setup instructions
 
 ---
 

@@ -292,6 +292,36 @@ export const BLOG_CONFIG: BlogConfig = {
     shortcuts: 'auto' as const // Will auto-generate from navigation.header.links
   },
 
+  // Image Resolution Configuration
+  // These values define the standard image widths used throughout the blog
+  imageResolutions: {
+    // Width for post card thumbnails (homepage, category listings, etc.)
+    card: 640,
+    
+    // Width for standard blog post content images
+    content: 960,
+    
+    // Width for zoomed/fullscreen images
+    zoom: 1280,
+    
+    // Additional custom resolutions (optional)
+    // Add extra breakpoints beyond the standard sizes if needed
+    additional: [], // High-res displays
+    
+    // Image formats to generate during optimization
+    // 'original' keeps the same format as source, 'webp' creates WebP versions
+    formats: ['webp'],
+    
+    // Quality settings for each format (0-100)
+    quality: {
+      webp: 80,
+      jpg: 80,
+      jpeg: 80,
+      png: 80
+    }
+  },
+
+
   // संपर्क पेज
   contactPage: {
     title: 'संपर्क करें',

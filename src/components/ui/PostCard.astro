@@ -30,8 +30,8 @@ function formatDate(date: Date): string {
         <ResponsiveImage 
           src={post.data.heroImage} 
           alt={post.data.heroImageAlt || post.data.title} 
-          width={400} 
-          height={225} 
+          width={BLOG_CONFIG.imageResolutions.card} 
+          height={Math.round(BLOG_CONFIG.imageResolutions.card * 0.5625)} 
           densities={[1, 1.5, 2]}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
           loading={lazyLoadImage ? 'lazy' : 'eager'}

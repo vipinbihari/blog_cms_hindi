@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node src/scripts/prebuild.js && npm run update-content && node src/scripts/optimizeImages.js && astro build",
+    "build": "node src/scripts/prebuild.js && npm run update-content && npx tsx src/scripts/optimizeImages.js && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "optimize-images": "node src/scripts/optimizeImages.js",
+    "optimize-images": "npx tsx src/scripts/optimizeImages.js",
     "update-content": "bash ./scripts/update-content.sh",
     "dev:with-content": "npm run update-content && npm run dev"
   },

@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import { getRelatedPosts } from '../../lib/content';
 import ResponsiveImage from '../../components/ui/ResponsiveImage.astro';
+import Video from '../../components/ui/Video.astro';
 import { BLOG_CONFIG } from '../../config/current-config';
 
 // Generate static paths for all blog posts
@@ -25,5 +26,5 @@ const { Content } = await entry.render();
 ---
 
 <PostLayout post={entry} content={Content} relatedPosts={relatedPosts}>
-  <Content components={{ img: ResponsiveImage }} />
+  <Content components={{ img: ResponsiveImage, Video: Video }} />
 </PostLayout>

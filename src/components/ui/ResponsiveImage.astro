@@ -3,7 +3,7 @@
  * ResponsiveImage component
  * 
  * Optimizes images for different screen sizes and improves loading performance:
- * - All blog post content images are standardized to 640px resolution by default
+ * - Image resolutions are configurable from central config (card, content, zoom sizes)
  * - Hero images can be explicitly sized via the width prop
  * - Images are zoomable through the custom modal in PostLayout.astro
  * - Supports WebP with fallback to original format
@@ -13,6 +13,7 @@
  * Works with the separated content repository structure
  */
 import { resolveContentImagePath } from '../../lib/imagePathResolver';
+import { BLOG_CONFIG } from '../../config/current-config.ts';
 
 interface Props {
   src: string;
@@ -46,17 +47,16 @@ const resolvedSrc = resolveContentImagePath(src);
 const isExternal = resolvedSrc.startsWith('http');
 
 // Determine optimal image size based on component usage context
-// - Use 320px for PostCard images (home page thumbnails)
-// - Use 640px as default for blog post content images
+// Uses configured image resolutions from central config
 const getOptimalSize = () => {
   // If width is explicitly set to a smaller value, use that as a hint
   // that this is a thumbnail/preview image (like in PostCard)
   if (width && width <= 400) {
-    return 320; // Smaller resolution for thumbnails/previews
+    return BLOG_CONFIG.imageResolutions.card; // Use configured card resolution
   }
   
-  // Default to 640px for all regular content images (blog posts)
-  return 640;
+  // Default to content image size for all regular content images (blog posts)
+  return BLOG_CONFIG.imageResolutions.content;
 };
 
 // Get paths for optimized images
