@@ -12,7 +12,7 @@ import Video from '../components/ui/Video.astro';
 import RelatedPosts from '../components/features/RelatedPosts.astro';
 import UpstoxCTA from '../components/features/UpstoxCTA.astro';
 import { BLOG_CONFIG } from '../config/current-config';
-
+import { slugifyTag } from '../lib/slugify';
 
 type Props = {
   post: CollectionEntry<'posts'>;
@@ -77,7 +77,7 @@ const components = {
         <div class="flex flex-wrap gap-2 mb-6">
           {tags.map((tag) => (
             <a 
-              href={`/tags/${tag}`}
+              href={`/tags/${slugifyTag(tag)}`}
               class="text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 px-2 py-1 rounded-full"
             >
               #{tag}

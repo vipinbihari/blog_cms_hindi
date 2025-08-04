@@ -2,9 +2,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Page } from 'astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import FormattedDate from '../../../../components/ui/FormattedDate.astro';
 import PageNavigation from '../../../../components/features/PageNavigation.astro';
-import ResponsiveImage from '../../../../components/ui/ResponsiveImage.astro';
+import PostCard from '../../../../components/ui/PostCard.astro';
 import { SEO } from 'astro-seo';
 import { BLOG_CONFIG } from '../../../../config/current-config';
 
@@ -52,21 +51,7 @@ const seoOpenGraph = {
   },
 };
 
-// Helper function to determine the display image URL
-function getDisplayImage(post: CollectionEntry<'posts'>): string {
-  const placeholderImageUrl = `https://placehold.co/400x200?text=${encodeURIComponent(post.data.title.replace(/\s+/g, '+'))}`;
-  let image = post.data.heroImage || placeholderImageUrl;
 
-  if (image && !image.startsWith('http') && !image.startsWith('/images/uploads/')) {
-    if (image.startsWith('/')) {
-      const parts = image.split('/').filter(p => p);
-      if (parts.length > 0) {
-        image = `/images/uploads/${parts.join('/')}`;
-      }
-    }
-  }
-  return image;
-}
 ---
 
 <BaseLayout>
@@ -89,40 +74,9 @@ function getDisplayImage(post: CollectionEntry<'posts'>): string {
       </p>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {page.data.map((post) => {
-          return (
-          <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:translate-y-[-5px] overflow-hidden">
-            <a href={`/posts/${post.slug}/`} class="no-underline block">
-              <div class="overflow-hidden">
-                <ResponsiveImage
-                  src={getDisplayImage(post)}
-                  alt={post.data.title}
-                  class="w-full h-52 object-cover transition-transform duration-300 hover:scale-105"
-                  width={320}
-                  height={180}
-                  sizes="320px"
-                  loading="lazy"
-                />
-              </div>
-              <div class="p-6">
-                <span class="text-xs font-medium inline-block bg-primary-100 dark:bg-primary-900/50 text-primary-800 dark:text-primary-100 px-3 py-1 rounded-full mb-4">
-                  {post.data.category}
-                </span>
-                
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{post.data.title}</h2>
-                <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{post.data.excerpt}</p>
-                
-                <div class="flex justify-between items-center pt-3 border-t border-gray-100 dark:border-gray-700">
-                  <span class="text-sm text-primary-600 dark:text-primary-400 font-medium">Read more →</span>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">
-                    <FormattedDate date={post.data.date} />
-                  </span>
-                </div>
-              </div>
-            </a>
-          </article>
-        );
-        })}
+        {page.data.map((post) => (
+          <PostCard post={post} lazyLoadImage={true} />
+        ))}
       </div>
       
       <!-- Pagination Controls -->

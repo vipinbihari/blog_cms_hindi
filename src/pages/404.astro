@@ -1,16 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { compareDesc } from 'date-fns';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FormattedDate from '../components/ui/FormattedDate.astro';
+import PostCard from '../components/ui/PostCard.astro';
 
 // Get recent posts for suggestions (safely handling empty collections)
-let recentPosts = [];
+let recentPosts: CollectionEntry<'posts'>[] = [];
 try {
-  const allPosts = await getCollection('posts');
+  const allPosts: CollectionEntry<'posts'>[] = await getCollection('posts');
   if (allPosts && allPosts.length > 0) {
     recentPosts = allPosts
-      .sort((a, b) => compareDesc(a.data.date, b.data.date))
+      .sort((a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) => {
+        // Convert dates to Date objects for comparison
+        const dateA = new Date(a.data.date);
+        const dateB = new Date(b.data.date);
+        return compareDesc(dateA, dateB);
+      })
       .slice(0, 3);
   }
 } catch (error) {
@@ -51,37 +56,7 @@ try {
       
       <div class="grid md:grid-cols-3 gap-8">
         {recentPosts.map((post) => (
-          <article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 text-left">
-            {post.data.heroImage && (
-              <a href={`/posts/${post.data.slug}/`}>
-                <img 
-                  src={post.data.heroImage} 
-                  alt={post.data.title}
-                  class="w-full h-48 object-cover"
-                />
-              </a>
-            )}
-            
-            <div class="p-6">
-              <h4 class="text-xl font-bold mb-2">
-                <a 
-                  href={`/posts/${post.data.slug}/`}
-                  class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400"
-                >
-                  {post.data.title}
-                </a>
-              </h4>
-              
-              <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-                {post.data.excerpt}
-              </p>
-              
-              <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                <span>By {post.data.author}</span>
-                <FormattedDate date={post.data.date} />
-              </div>
-            </div>
-          </article>
+          <PostCard post={post} lazyLoadImage={true} />
         ))}
       </div>
     </div>
