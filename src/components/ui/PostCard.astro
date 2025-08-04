@@ -23,7 +23,7 @@ function formatDate(date: Date): string {
   }).format(date);
 }
 ---
-<article class={`group bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full ${className} cursor-pointer`} data-post-url={postUrl}>
+<article class={`bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:shadow-xl border-2 border-transparent hover:border-primary-500 dark:hover:border-primary-400 hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col h-full ${className} cursor-pointer`} data-post-url={postUrl}>
   <a href={postUrl} class="block">
     {post.data.heroImage && (
       <div class="aspect-video overflow-hidden bg-slate-200 dark:bg-slate-700 rounded-t-lg">
@@ -33,7 +33,7 @@ function formatDate(date: Date): string {
           width={BLOG_CONFIG.imageResolutions.card} 
           height={Math.round(BLOG_CONFIG.imageResolutions.card * 0.5625)} 
           densities={[1, 1.5, 2]}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 rounded-t-lg"
           loading={lazyLoadImage ? 'lazy' : 'eager'}
         />
       </div>

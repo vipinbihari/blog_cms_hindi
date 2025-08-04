@@ -118,7 +118,7 @@ const calculatedHeight = width && !height && aspectRatio ? Math.round(width / as
     <img 
       src={resolvedSrc} 
       alt={alt}
-      class={`${className} object-cover dark:bg-white dark:border dark:border-gray-200 dark:shadow-md rounded-sm`}
+      class={`${className} object-cover rounded-sm`}
       loading={loading}
       width={width}
       height={calculatedHeight}
@@ -138,7 +138,7 @@ const calculatedHeight = width && !height && aspectRatio ? Math.round(width / as
       <img 
         src={optimizedPath}
         alt={alt}
-        class={`${className} object-cover dark:bg-white dark:border dark:border-gray-200 dark:shadow-md rounded-sm`}
+        class={`${className} object-cover rounded-sm`}
         loading={loading}
         width={width}
         height={calculatedHeight}

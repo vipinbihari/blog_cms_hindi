@@ -78,36 +78,37 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #D1D5DB; /* gray-300 */
+  background-color: theme('colors.primary.100'); /* Light theme primary background */
   transition: background-color 0.3s ease, transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  color: #4B5563; /* gray-600 */
+  color: theme('colors.primary.600'); /* Theme primary text */
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 1px solid theme('colors.primary.200');
 }
 
 /* Improved contrast for dark mode */
 .dark .scroll-dot {
-  background-color: #374151; /* gray-700 */
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: theme('colors.primary.900/20'); /* Dark theme primary background */
+  color: theme('colors.primary.400'); /* Brighter theme color for text */
+  border: 1px solid theme('colors.primary.800');
 }
 
 .scroll-dot.active {
-  background-color: var(--theme-primary-color);
+  background-color: theme('colors.primary.600');
   transform: scale(1.25);
   color: white;
   font-weight: 700;
+  border-color: theme('colors.primary.600');
 }
 
 .dark .scroll-dot.active {
-  background-color: var(--theme-primary-color); /* Using theme primary color */
-  color: #1F2937; /* gray-800 */
-  border-color: rgba(255, 255, 255, 0.5);
+  background-color: theme('colors.primary.500'); /* Slightly lighter in dark mode */
+  color: white; /* White text for better contrast */
+  border-color: theme('colors.primary.500');
 }
 
 /* Enhanced scroll buttons */
@@ -121,7 +122,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: white;
+  background-color: theme('colors.primary.600');
+  color: white;
   border: none;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
               0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -131,8 +133,8 @@
 }
 
 .dark .carousel-nav-button {
-  background-color: #1F2937; /* gray-800 */
-  color: #E5E7EB; /* gray-200 */
+  background-color: theme('colors.primary.500');
+  color: white;
 }
 
 .carousel-container:hover .carousel-nav-button {
@@ -142,6 +144,11 @@
 .carousel-nav-button:hover {
   opacity: 1 !important;
   transform: translateY(-50%) scale(1);
+  background-color: theme('colors.primary.700');
+}
+
+.dark .carousel-nav-button:hover {
+  background-color: theme('colors.primary.400');
 }
 
 .carousel-nav-button.prev {
